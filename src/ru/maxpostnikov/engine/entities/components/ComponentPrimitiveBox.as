@@ -10,17 +10,12 @@ package ru.maxpostnikov.engine.entities.components
 	public class ComponentPrimitiveBox extends ComponentPrimitive
 	{
 		
-		public function ComponentPrimitiveBox() 
-		{
-			shape = ComponentPrimitive.SHAPE_BOX;
-		}
-		
 		override protected function createShape():b2Shape 
 		{
 			var shape:b2Shape;
 			
 			shape = new b2PolygonShape();
-			(shape as b2PolygonShape).SetAsBox((this.width / 2) / Engine.RATIO, (this.height / 2) / Engine.RATIO);
+			(shape as b2PolygonShape).SetAsBox((this.getChildAt(0).width / 2) / Engine.RATIO, (this.getChildAt(0).height / 2) / Engine.RATIO);
 			
 			return shape;
 		}

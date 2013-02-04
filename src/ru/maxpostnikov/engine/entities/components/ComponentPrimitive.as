@@ -5,6 +5,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
 	/**
 	 * ...
@@ -12,10 +13,6 @@ package ru.maxpostnikov.engine.entities.components
 	 */
 	public class ComponentPrimitive extends Component
 	{
-		
-		public static const SHAPE_BOX:String = "Box";
-		public static const SHAPE_CIRCLE:String = "Circle";
-		public static const SHAPE_POLYGON:String = "Polygon";
 		
 		public static const TYPE_STATIC:String = "Static";
 		public static const TYPE_DINAMIC:String = "Dinamic";
@@ -38,11 +35,11 @@ package ru.maxpostnikov.engine.entities.components
 		[Inspectable(type="Boolean", defaultValue="false")]
 		public var isBullet:Boolean = false;
 		
-		protected var shape:String;
-		
 		override protected function onInit(e:Event):void 
 		{
 			super.onInit(e);
+			
+			hide();
 			
 			bodyDef = createBodyDef();
 			fixtureDef = createFixtureDef();
@@ -50,8 +47,10 @@ package ru.maxpostnikov.engine.entities.components
 		
 		private function createBodyDef():b2BodyDef 
 		{
+			var position:Point = this.parent.localToGlobal(new Point(this.x, this.y));
+			
 			var bodyDef:b2BodyDef = new b2BodyDef();
-			bodyDef.position.Set(this.x / Engine.RATIO, this.y / Engine.RATIO);
+			bodyDef.position.Set(position.x / Engine.RATIO, position.y / Engine.RATIO);
 			bodyDef.bullet = this.isBullet;
 			
 			if (this.type == TYPE_STATIC)

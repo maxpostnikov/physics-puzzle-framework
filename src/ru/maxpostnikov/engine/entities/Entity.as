@@ -2,7 +2,6 @@ package ru.maxpostnikov.engine.entities
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-	import flash.events.Event;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
 	/**
@@ -17,13 +16,6 @@ package ru.maxpostnikov.engine.entities
 		
 		public function Entity()
 		{
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		}
-		
-		private function onAddedToStage(e:Event):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			
 			_components = new <Component>[];
 			
 			for (var i:int = 0; i < numChildren; i++) {

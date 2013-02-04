@@ -2,8 +2,6 @@ package ru.maxpostnikov.engine.entities.components
 {
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	/**
@@ -18,16 +16,9 @@ package ru.maxpostnikov.engine.entities.components
 		
 		public function Component() 
 		{
-			/*for (var i:int = 0; i < numChildren; i++) {
-				var child:DisplayObject = getChildAt(i);
-				
-				if (child is DisplayObjectContainer) {
-					(child as DisplayObjectContainer).mouseEnabled = false;
-					(child as DisplayObjectContainer).mouseChildren = false;
-				}
-			}*/
+			this.mouseChildren = false;
 			
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
 		}
 		
 		private function onAddedToStage(e:Event):void 
