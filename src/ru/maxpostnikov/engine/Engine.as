@@ -1,6 +1,8 @@
-package ru.maxpostnikov 
+package ru.maxpostnikov.engine 
 {
 	import flash.display.DisplayObjectContainer;
+	import ru.maxpostnikov.engine.core.Loop;
+	import ru.maxpostnikov.engine.entities.Entity;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -27,6 +29,21 @@ package ru.maxpostnikov
 		public function launch(container:DisplayObjectContainer):void 
 		{
 			_loop = new Loop(container, RATIO);
+		}
+		
+		public function addEntity(entity:Entity):void 
+		{
+			addToQueue(entity);
+		}
+		
+		public function removeEntiry(entity:Entity):void 
+		{
+			addToQueue(entity);
+		}
+		
+		private function addToQueue(entity:Entity):void 
+		{
+			if (_loop.queue.indexOf(entity) < 0) _loop.queue.push(entity);
 		}
 		
 	}

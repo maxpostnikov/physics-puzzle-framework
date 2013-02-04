@@ -1,7 +1,8 @@
-package ru.maxpostnikov
+package 
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import ru.maxpostnikov.engine.Engine;
 	
 	/**
 	 * ...
@@ -23,6 +24,10 @@ package ru.maxpostnikov
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			Engine.getInstacne().launch(this);
+			
+			var level:Level = new Level();
+			addChild(level);
+			trace(level.getChildAt(0));
 		}
 		
 	}

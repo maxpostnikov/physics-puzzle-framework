@@ -1,11 +1,11 @@
-package ru.maxpostnikov 
+package ru.maxpostnikov.engine.core 
 {
 	import Box2D.Dynamics.b2ContactListener;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
-	public class ContactListener extends b2ContactListener
+	internal class ContactListener extends b2ContactListener
 	{
 		
 	}

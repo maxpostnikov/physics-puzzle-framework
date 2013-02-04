@@ -1,15 +1,17 @@
-package ru.maxpostnikov 
+package ru.maxpostnikov.engine.core 
 {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2ContactListener;
 	import Box2D.Dynamics.b2DebugDraw;
 	import Box2D.Dynamics.b2World;
 	import flash.display.Sprite;
+	import ru.maxpostnikov.engine.entities.components.Component;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
-	public class Physics 
+	internal class Physics 
 	{
 		
 		private const _GRAVITY_X:Number = 0;
@@ -36,11 +38,17 @@ package ru.maxpostnikov
 		{
 			_world.Step(_DT, _ITERATIONS_VELOCITY, _ITERATIONS_POSITION);
 			_world.ClearForces();
+			
+			_world.DrawDebugData();
 		}
 		
-		public function debug():void 
+		public function addBody(component:Component):void 
 		{
-			_world.DrawDebugData();
+			var body:b2Body = _world.CreateBody(component.bodyDef);
+			body.CreateFixture(component.fixtureDef);
+			
+			body.SetAngle(component.rotation * Math.PI / 180);
+			body.SetUserData(component);
 		}
 		
 		private function initDebugDraw(ratio:Number, sprite:Sprite):void 
