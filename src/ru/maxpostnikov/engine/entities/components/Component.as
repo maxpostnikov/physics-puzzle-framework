@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.entities.components 
 {
+	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import flash.display.MovieClip;
@@ -11,8 +12,9 @@ package ru.maxpostnikov.engine.entities.components
 	public class Component extends MovieClip
 	{
 		
+		public var body:b2Body;
 		public var bodyDef:b2BodyDef;
-		public var fixtureDef:b2FixtureDef;
+		public var fixtureDefs:Vector.<b2FixtureDef>;
 		
 		public function Component() 
 		{

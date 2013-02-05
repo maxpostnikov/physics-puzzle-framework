@@ -4,9 +4,11 @@ package ru.maxpostnikov.engine.core
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2ContactListener;
 	import Box2D.Dynamics.b2DebugDraw;
+	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	import flash.display.Sprite;
 	import ru.maxpostnikov.engine.entities.components.Component;
+	import ru.maxpostnikov.engine.entities.components.ComponentPrimitive;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -45,9 +47,13 @@ package ru.maxpostnikov.engine.core
 		public function addBody(component:Component):void 
 		{
 			var body:b2Body = _world.CreateBody(component.bodyDef);
-			body.CreateFixture(component.fixtureDef);
+			for each (var fixtureDef:b2FixtureDef in component.fixtureDefs)
+				body.CreateFixture(fixtureDef);
 			
-			body.SetAngle(component.rotation * Math.PI / 180);
+			if (component is ComponentPrimitive)
+				body.SetAngle(component.rotation * Math.PI / 180);
+			
+			component.body = body;
 			body.SetUserData(component);
 		}
 		

@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine.entities.components 
 {
 	import Box2D.Collision.Shapes.b2Shape;
+	import Box2D.Common.Math.b2Transform;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
@@ -42,7 +43,7 @@ package ru.maxpostnikov.engine.entities.components
 			hide();
 			
 			bodyDef = createBodyDef();
-			fixtureDef = createFixtureDef();
+			if (!fixtureDefs) fixtureDefs = new <b2FixtureDef>[createFixtureDef()];
 		}
 		
 		private function createBodyDef():b2BodyDef 
@@ -61,7 +62,7 @@ package ru.maxpostnikov.engine.entities.components
 			return bodyDef;	
 		}
 		
-		private function createFixtureDef():b2FixtureDef 
+		public function createFixtureDef():b2FixtureDef 
 		{
 			var fixtureDef:b2FixtureDef = new b2FixtureDef();
 			fixtureDef.shape = createShape();
@@ -76,6 +77,11 @@ package ru.maxpostnikov.engine.entities.components
 		}
 		
 		protected function createShape():b2Shape 
+		{
+			throw Error("Primitives subclasses must override this");
+		}
+		
+		public function createTransformedShape(transform:b2Transform):b2Shape 
 		{
 			throw Error("Primitives subclasses must override this");
 		}

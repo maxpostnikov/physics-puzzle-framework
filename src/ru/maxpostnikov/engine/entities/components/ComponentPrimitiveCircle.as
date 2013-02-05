@@ -2,6 +2,7 @@ package ru.maxpostnikov.engine.entities.components
 {
 	import Box2D.Collision.Shapes.b2CircleShape;
 	import Box2D.Collision.Shapes.b2Shape;
+	import Box2D.Common.Math.b2Transform;
 	import ru.maxpostnikov.engine.Engine;
 	/**
 	 * ...
@@ -16,6 +17,17 @@ package ru.maxpostnikov.engine.entities.components
 			
 			var radius:Number = (Math.max(this.getChildAt(0).width, this.getChildAt(0).height) / 2) / Engine.RATIO;
 			shape = new b2CircleShape(radius);
+			
+			return shape;
+		}
+		
+		override public function createTransformedShape(transform:b2Transform):b2Shape 
+		{
+			var shape:b2Shape;
+			
+			var radius:Number = (Math.max(this.getChildAt(0).width, this.getChildAt(0).height) / 2) / Engine.RATIO;
+			shape = new b2CircleShape(radius);
+			(shape as b2CircleShape).SetLocalPosition(transform.position);
 			
 			return shape;
 		}
