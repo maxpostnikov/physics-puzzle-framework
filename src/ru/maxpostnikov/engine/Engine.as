@@ -1,7 +1,9 @@
 package ru.maxpostnikov.engine 
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.MovieClip;
 	import ru.maxpostnikov.engine.core.Loop;
+	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.Entity;
 	/**
 	 * ...
@@ -36,12 +38,17 @@ package ru.maxpostnikov.engine
 			addToQueue(entity);
 		}
 		
-		public function removeEntiry(entity:Entity):void 
+		public function removeEntity(entity:Entity):void 
 		{
 			addToQueue(entity);
 		}
 		
-		private function addToQueue(entity:Entity):void 
+		public function removeComponent(component:Component):void 
+		{
+			addToQueue(component);
+		}
+		
+		private function addToQueue(entity:MovieClip):void 
 		{
 			if (_loop.queue.indexOf(entity) < 0) _loop.queue.push(entity);
 		}

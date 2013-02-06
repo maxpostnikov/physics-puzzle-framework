@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine.core 
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import ru.maxpostnikov.engine.entities.components.Component;
@@ -12,7 +13,7 @@ package ru.maxpostnikov.engine.core
 	public class Loop 
 	{
 		
-		public var queue:Vector.<Entity>;
+		public var queue:Vector.<MovieClip>;
 		
 		private var _entities:Vector.<Entity>;
 		private var _physics:Physics;
@@ -25,7 +26,7 @@ package ru.maxpostnikov.engine.core
 			_contactListener = new ContactListener();
 			_physics = new Physics(ratio, _contactListener, createDebugSprite());
 			
-			queue = new <Entity>[];
+			queue = new <MovieClip>[];
 			_entities = new <Entity>[];
 			
 			_container.addEventListener(Event.ENTER_FRAME, step);
@@ -48,16 +49,20 @@ package ru.maxpostnikov.engine.core
 		
 		private function processQueue():void 
 		{
-			for each (var entity:Entity in queue) {
-				if (!entity.isRemoved) {
-					for each (var component:Component in entity.components)
-						_physics.addBody(component);
-					
-					_entities.push(entity);
+			for each (var mc:MovieClip in queue) {
+				if (mc is Entity) {
+					if (!(mc as Entity).isRemoved) {
+						for each (var component:Component in (mc as Entity).components)
+							_physics.addBody(component);
+						
+						_entities.push(mc as Entity);
+					}
+				} else if (mc is Component) {
+					_physics.removeBody(mc as Component);
 				}
 			}
 			
-			queue = new <Entity>[];
+			queue = new <MovieClip>[];
 		}
 		
 		private function createDebugSprite():Sprite 
@@ -68,8 +73,6 @@ package ru.maxpostnikov.engine.core
 			
 			return debugSprite;
 		}
-		
-		public function get physics():Physics { return _physics; }
 		
 	}
 

@@ -6,10 +6,10 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -17,7 +17,6 @@ package ru.maxpostnikov.engine.entities.components
 	public class ComponentGroup extends Component
 	{
 		
-		private var _skin:MovieClip;
 		private var _group:Vector.<Component>;
 		
 		public function ComponentGroup() 
@@ -29,8 +28,6 @@ package ru.maxpostnikov.engine.entities.components
 				
 				if (child is Component)
 					_group.push(child as Component);
-				else
-					child.visible = false;
 			}
 		}
 		
@@ -38,20 +35,27 @@ package ru.maxpostnikov.engine.entities.components
 		{
 			super.onInit(e);
 			
-			_skin = getSkin();
+			rotateInsideOut();
 			
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
 		}
 		
-		private function getSkin():MovieClip 
+		private function rotateInsideOut():void 
 		{
-			for each (var component:Component in _group) {
-				if (component is ComponentGraphic) 
-					return component;
+			for (var i:int = 0; i < numChildren; i++) {
+				var child:DisplayObject = getChildAt(i);
+				
+				var angle:Number = Utils.angleInRadians(this.rotation);
+				var position:Point = new Point((Math.cos(angle) * child.x) - (Math.sin(angle) * child.y),
+											   (Math.sin(angle) * child.x) + (Math.cos(angle) * child.y));
+				
+				child.x = position.x;
+				child.y = position.y;
+				child.rotation += this.rotation;
 			}
 			
-			return null;
+			this.rotation = 0;
 		}
 		
 		private function createBodyDef():b2BodyDef 
@@ -64,30 +68,6 @@ package ru.maxpostnikov.engine.entities.components
 			bodyDef.type = getType();
 			
 			return bodyDef;	
-		}
-		
-		private function createFixtureDefs():Vector.<b2FixtureDef> 
-		{
-			var fixtureDefs:Vector.<b2FixtureDef> = new <b2FixtureDef>[];
-			
-			var position:Point = this.parent.localToGlobal(new Point(this.x, this.y));
-			
-			for each (var component:Component in _group) {
-				if (component is ComponentPrimitive) {
-					var position2:Point = component.parent.localToGlobal(new Point(component.x, component.y));
-					
-					var transform:b2Transform = new b2Transform();
-					transform.R.Set((this.rotation + component.rotation) * Math.PI / 180);
-					transform.position = new b2Vec2((position2.x - position.x) / Engine.RATIO, (position2.y - position.y) / Engine.RATIO);
-					
-					component.fixtureDefs = new <b2FixtureDef>[(component as ComponentPrimitive).createFixtureDef()];
-					component.fixtureDefs[0].shape = (component as ComponentPrimitive).createTransformedShape(transform);
-					
-					fixtureDefs.push(component.fixtureDefs[0]);
-				}
-			}
-			
-			return fixtureDefs;
 		}
 		
 		private function getBullet():Boolean 
@@ -120,9 +100,24 @@ package ru.maxpostnikov.engine.entities.components
 				return b2Body.b2_dynamicBody;
 		}
 		
-		public function get group():Vector.<Component> { return _group; }
-		
-		public function get skin():MovieClip { return _skin; }
+		private function createFixtureDefs():Vector.<b2FixtureDef> 
+		{
+			var fixtureDefs:Vector.<b2FixtureDef> = new <b2FixtureDef>[];
+			
+			for each (var component:Component in _group) {
+				if (component is ComponentPrimitive) {
+					var transform:b2Transform = new b2Transform();
+					transform.R.Set(Utils.angleInRadians(component.rotation));
+					transform.position = new b2Vec2(component.x / Engine.RATIO, component.y / Engine.RATIO);
+					
+					component.fixtureDefs = (component as ComponentPrimitive).createFixtureDefs(transform);
+					
+					fixtureDefs = fixtureDefs.concat(component.fixtureDefs);
+				}
+			}
+			
+			return fixtureDefs;
+		}
 		
 	}
 

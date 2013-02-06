@@ -9,6 +9,7 @@ package ru.maxpostnikov.engine.core
 	import flash.display.Sprite;
 	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.components.ComponentPrimitive;
+	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -51,10 +52,15 @@ package ru.maxpostnikov.engine.core
 				body.CreateFixture(fixtureDef);
 			
 			if (component is ComponentPrimitive)
-				body.SetAngle(component.rotation * Math.PI / 180);
+				body.SetAngle(Utils.angleInRadians(component.rotation));
 			
 			component.body = body;
 			body.SetUserData(component);
+		}
+		
+		public function removeBody(component:Component):void 
+		{
+			_world.DestroyBody(component.body);
 		}
 		
 		private function initDebugDraw(ratio:Number, sprite:Sprite):void 
@@ -70,8 +76,6 @@ package ru.maxpostnikov.engine.core
 				_world.SetDebugDraw(debugDraw);
 			}
 		}
-		
-		public function get world():b2World { return _world; }
 		
 	}
 

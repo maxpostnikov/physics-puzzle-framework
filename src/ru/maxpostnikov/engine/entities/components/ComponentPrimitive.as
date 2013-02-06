@@ -1,6 +1,8 @@
 package ru.maxpostnikov.engine.entities.components 
 {
+	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Collision.Shapes.b2Shape;
+	import Box2D.Common.Math.b2Math;
 	import Box2D.Common.Math.b2Transform;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
@@ -30,6 +32,12 @@ package ru.maxpostnikov.engine.entities.components
 		[Inspectable(type="Number", defaultValue=0.5)]
 		public var restitution:Number = 0.5;
 		
+		[Inspectable(type="Number", defaultValue=1)]
+		public var maskBits:Number = 1;
+		
+		[Inspectable(type="Number", defaultValue=1)]
+		public var categoryBits:Number = 1;
+		
 		[Inspectable(type="Boolean", defaultValue="false")]
 		public var isSensor:Boolean = false;
 		
@@ -43,7 +51,7 @@ package ru.maxpostnikov.engine.entities.components
 			hide();
 			
 			bodyDef = createBodyDef();
-			if (!fixtureDefs) fixtureDefs = new <b2FixtureDef>[createFixtureDef()];
+			if (!fixtureDefs) fixtureDefs = createFixtureDefs();
 		}
 		
 		private function createBodyDef():b2BodyDef 
@@ -62,28 +70,41 @@ package ru.maxpostnikov.engine.entities.components
 			return bodyDef;	
 		}
 		
-		public function createFixtureDef():b2FixtureDef 
+		public function createFixtureDefs(transform:b2Transform = null):Vector.<b2FixtureDef> 
 		{
+			var fixtureDefs:Vector.<b2FixtureDef> = new <b2FixtureDef>[];
+			
 			var fixtureDef:b2FixtureDef = new b2FixtureDef();
-			fixtureDef.shape = createShape();
+			fixtureDef.shape = createShape(transform);
 			fixtureDef.density = this.density;
 			fixtureDef.friction = this.friction;
 			fixtureDef.restitution = this.restitution;
 			fixtureDef.isSensor = this.isSensor;
-			//fixtureDef.filter.maskBits = 1;
-			//fixtureDef.filter.categoryBits = 1;
+			fixtureDef.filter.maskBits = this.maskBits;
+			fixtureDef.filter.categoryBits = this.categoryBits;
+			fixtureDefs.push(fixtureDef);
 			
-			return fixtureDef;
+			return fixtureDefs;
 		}
 		
-		protected function createShape():b2Shape 
+		public function createShape(transform:b2Transform = null):b2Shape 
 		{
 			throw Error("Primitives subclasses must override this");
 		}
 		
-		public function createTransformedShape(transform:b2Transform):b2Shape 
+		protected function createPolygonShape(coordinates:Array, transform:b2Transform):b2Shape 
 		{
-			throw Error("Primitives subclasses must override this");
+			var shape:b2Shape;
+			
+			if (transform) {
+				for (var i:int = 0; i < coordinates.length; i++)
+					coordinates[i] = b2Math.MulX(transform, coordinates[i]);
+			}
+			
+			shape = new b2PolygonShape();
+			(shape as b2PolygonShape).SetAsArray(coordinates, coordinates.length);
+			
+			return shape;
 		}
 		
 	}

@@ -11,23 +11,15 @@ package ru.maxpostnikov.engine.entities.components
 	public class ComponentPrimitiveCircle extends ComponentPrimitive
 	{
 		
-		override protected function createShape():b2Shape 
+		override public function createShape(transform:b2Transform = null):b2Shape 
 		{
 			var shape:b2Shape;
 			
 			var radius:Number = (Math.max(this.getChildAt(0).width, this.getChildAt(0).height) / 2) / Engine.RATIO;
 			shape = new b2CircleShape(radius);
 			
-			return shape;
-		}
-		
-		override public function createTransformedShape(transform:b2Transform):b2Shape 
-		{
-			var shape:b2Shape;
-			
-			var radius:Number = (Math.max(this.getChildAt(0).width, this.getChildAt(0).height) / 2) / Engine.RATIO;
-			shape = new b2CircleShape(radius);
-			(shape as b2CircleShape).SetLocalPosition(transform.position);
+			if (transform)
+				(shape as b2CircleShape).SetLocalPosition(transform.position);
 			
 			return shape;
 		}
