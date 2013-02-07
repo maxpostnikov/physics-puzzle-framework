@@ -1,7 +1,7 @@
 package ru.maxpostnikov.utilities 
 {
 	import flash.display.MovieClip;
-	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -28,12 +28,12 @@ package ru.maxpostnikov.utilities
 			return angle * Math.PI / 180;
 		}
 		
-		public static function realSize(mc:MovieClip):Point 
+		public static function realSize(mc:MovieClip):Rectangle 
 		{
 			var rotation:Number = mc.rotation;
 			
 			mc.rotation = 0;
-			var size:Point = new Point(mc.width, mc.height);
+			var size:Rectangle = new Rectangle(0, 0, mc.width, mc.height);
 			mc.rotation = rotation;
 			
 			return size;

@@ -3,6 +3,7 @@ package ru.maxpostnikov.engine.entities
 	import Box2D.Dynamics.b2Body;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
@@ -11,7 +12,7 @@ package ru.maxpostnikov.engine.entities
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
-	public class Entity extends MovieClip
+	public class Entity extends MovieClip implements IProcessable
 	{
 		
 		private var _isRemoved:Boolean;
@@ -28,14 +29,22 @@ package ru.maxpostnikov.engine.entities
 					_components.push(child as Component);
 			}
 			
-			Engine.getInstacne().addEntity(this);
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
+		}
+		
+		private function onAddedToStage(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			Engine.getInstacne().process(this);
 		}
 		
 		public function remove():void 
 		{
-			_isRemoved = true;
+			this.parent.removeChild(this);
 			
-			Engine.getInstacne().removeEntity(this);
+			_isRemoved = true;
+			Engine.getInstacne().process(this);
 		}
 		
 		public function update():void 
@@ -47,8 +56,9 @@ package ru.maxpostnikov.engine.entities
 		{
 			for each (var component:Component in _components) {
 				if (component.body && component.body.GetType() != b2Body.b2_staticBody) {
-					var position:Point = this.globalToLocal(new Point(component.body.GetPosition().x * Engine.RATIO, 
-																	  component.body.GetPosition().y * Engine.RATIO));
+					var bodyPosition:Point = new Point(component.body.GetPosition().x * Engine.RATIO, 
+													   component.body.GetPosition().y * Engine.RATIO);
+					var position:Point = this.globalToLocal(bodyPosition);
 					var rotation:Number = Utils.angleInDegrees(component.body.GetAngle());
 					if (Math.abs(rotation) > 360) rotation %= 360;
 					
@@ -56,18 +66,30 @@ package ru.maxpostnikov.engine.entities
 					component.y = position.y;
 					component.rotation = rotation;
 					
-					var size:Point = Utils.realSize(component); 
-					var pos:Point = this.localToGlobal(new Point(component.x, component.y)); trace(stage.stageWidth, stage.stageHeight, size, pos.x, pos.y);
-					
-					if (pos.y /*- (size.y / 2)*/ > stage.stageHeight || 
-						pos.x /*- (size.x / 2)*/ > stage.stageWidth || 
-						pos.y /*+ (size.y / 2)*/ < 0 || 
-						pos.x /*+ (size.x / 2)*/ < 0) {
-						_components.splice(_components.indexOf(component), 1);
-						Engine.getInstacne().removeComponent(component);
-					}
+					if (isOutsideBorder(component, bodyPosition)) removeComponent(component);
 				}
 			}
+		}
+		
+		private function isOutsideBorder(component:Component, position:Point):Boolean 
+		{
+			if (position.y - (component.height / 2) > Engine.getInstacne().height ||
+				position.y + (component.height / 2) < 0 || 
+				position.x - (component.width / 2) > Engine.getInstacne().width || 
+				position.x + (component.width / 2) < 0) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		private function removeComponent(component:Component):void 
+		{
+			_components.splice(_components.indexOf(component), 1);
+			
+			component.remove();
+			
+			if (_components.length == 0) remove();
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }

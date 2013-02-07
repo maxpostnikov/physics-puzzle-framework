@@ -3,7 +3,9 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Collision.Shapes.b2Shape;
 	import Box2D.Common.Math.b2Transform;
 	import Box2D.Common.Math.b2Vec2;
+	import flash.geom.Rectangle;
 	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -13,9 +15,11 @@ package ru.maxpostnikov.engine.entities.components
 		
 		override public function createShape(transform:b2Transform = null):b2Shape 
 		{
-			var coordinates:Array = [new b2Vec2((-this.getChildAt(0).width / 2) / Engine.RATIO, (-this.getChildAt(0).height / 2) / Engine.RATIO), 
-									 new b2Vec2(( this.getChildAt(0).width / 2) / Engine.RATIO, ( this.getChildAt(0).height / 2) / Engine.RATIO), 
-									 new b2Vec2((-this.getChildAt(0).width / 2) / Engine.RATIO, ( this.getChildAt(0).height / 2) / Engine.RATIO)];
+			var size:Rectangle = Utils.realSize(this);
+			
+			var coordinates:Array = [new b2Vec2((-size.width / 2) / Engine.RATIO, (-size.height / 2) / Engine.RATIO), 
+									 new b2Vec2(( size.width / 2) / Engine.RATIO, ( size.height / 2) / Engine.RATIO), 
+									 new b2Vec2((-size.width / 2) / Engine.RATIO, ( size.height / 2) / Engine.RATIO)];
 			
 			return createPolygonShape(coordinates, transform);
 		}

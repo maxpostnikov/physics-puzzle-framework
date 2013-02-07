@@ -1,10 +1,8 @@
 package ru.maxpostnikov.engine 
 {
 	import flash.display.DisplayObjectContainer;
-	import flash.display.MovieClip;
 	import ru.maxpostnikov.engine.core.Loop;
-	import ru.maxpostnikov.engine.entities.components.Component;
-	import ru.maxpostnikov.engine.entities.Entity;
+	import ru.maxpostnikov.engine.entities.IProcessable;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -14,7 +12,12 @@ package ru.maxpostnikov.engine
 		
 		public static const RATIO:Number = 30;
 		
+		private const _BORDER_WIDTH:Number = 50;
+		private const _BORDER_HEIGHT:Number = 50;
+		
 		private var _loop:Loop;
+		private var _width:Number;
+		private var _height:Number;
 		
 		private static var _instance:Engine;
 		
@@ -31,27 +34,19 @@ package ru.maxpostnikov.engine
 		public function launch(container:DisplayObjectContainer):void 
 		{
 			_loop = new Loop(container, RATIO);
+			
+			_width = container.stage.stageWidth + _BORDER_WIDTH;
+			_height = container.stage.stageHeight + _BORDER_HEIGHT;
 		}
 		
-		public function addEntity(entity:Entity):void 
+		public function process(object:IProcessable):void 
 		{
-			addToQueue(entity);
+			if (_loop.queue.indexOf(object) < 0) _loop.queue.push(object);
 		}
 		
-		public function removeEntity(entity:Entity):void 
-		{
-			addToQueue(entity);
-		}
+		public function get width():Number { return _width; }
 		
-		public function removeComponent(component:Component):void 
-		{
-			addToQueue(component);
-		}
-		
-		private function addToQueue(entity:MovieClip):void 
-		{
-			if (_loop.queue.indexOf(entity) < 0) _loop.queue.push(entity);
-		}
+		public function get height():Number { return _height; }
 		
 	}
 
