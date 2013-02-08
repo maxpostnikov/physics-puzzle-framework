@@ -6,7 +6,6 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import flash.display.DisplayObject;
-	import flash.events.Event;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.utilities.Utils;
@@ -31,31 +30,38 @@ package ru.maxpostnikov.engine.entities.components
 			}
 		}
 		
-		override protected function onInit(e:Event):void 
+		override public function add():void 
 		{
-			super.onInit(e);
-			
 			rotateInsideOut();
 			
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
 		}
 		
+		override public function remove():void 
+		{
+			super.remove();
+			
+			_group = null;
+		}
+		
 		private function rotateInsideOut():void 
 		{
+			var rotation:Number = this.rotation + this.parent.rotation;
+			var angle:Number = Utils.angleInRadians(rotation);
+			
 			for (var i:int = 0; i < numChildren; i++) {
 				var child:DisplayObject = getChildAt(i);
-				
-				var angle:Number = Utils.angleInRadians(this.rotation);
 				var position:Point = new Point((Math.cos(angle) * child.x) - (Math.sin(angle) * child.y),
 											   (Math.sin(angle) * child.x) + (Math.cos(angle) * child.y));
 				
 				child.x = position.x;
 				child.y = position.y;
-				child.rotation += this.rotation;
+				child.rotation += rotation;
 			}
 			
 			this.rotation = 0;
+			this.parent.rotation = 0;
 		}
 		
 		private function createBodyDef():b2BodyDef 
@@ -110,9 +116,7 @@ package ru.maxpostnikov.engine.entities.components
 					transform.R.Set(Utils.angleInRadians(component.rotation));
 					transform.position = new b2Vec2(component.x / Engine.RATIO, component.y / Engine.RATIO);
 					
-					component.fixtureDefs = (component as ComponentPrimitive).createFixtureDefs(transform);
-					
-					fixtureDefs = fixtureDefs.concat(component.fixtureDefs);
+					fixtureDefs = fixtureDefs.concat((component as ComponentPrimitive).createFixtureDefs(transform));
 				}
 			}
 			

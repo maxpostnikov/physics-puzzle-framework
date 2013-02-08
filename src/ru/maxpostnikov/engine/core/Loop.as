@@ -20,16 +20,31 @@ package ru.maxpostnikov.engine.core
 		private var _contactListener:ContactListener;
 		private var _container:DisplayObjectContainer;
 		
-		public function Loop(container:DisplayObjectContainer, ratio:Number) 
+		public function Loop(container:DisplayObjectContainer, ratio:Number, debugSprite:Sprite) 
 		{
 			_container = container;
 			_contactListener = new ContactListener();
-			_physics = new Physics(ratio, _contactListener, createDebugSprite());
+			_physics = new Physics(ratio, _contactListener, debugSprite);
 			
 			queue = new <IProcessable>[];
 			_entities = new <Entity>[];
 			
+			start();
+		}
+		
+		public function start():void 
+		{
 			_container.addEventListener(Event.ENTER_FRAME, step);
+		}
+		
+		public function stop():void 
+		{
+			_container.removeEventListener(Event.ENTER_FRAME, step);
+		}
+		
+		public function debug(value:Boolean):void 
+		{
+			_physics.isDebuged = value;
 		}
 		
 		private function step(e:Event):void 
@@ -68,15 +83,6 @@ package ru.maxpostnikov.engine.core
 			}
 			
 			queue = new <IProcessable>[];
-		}
-		
-		private function createDebugSprite():Sprite 
-		{
-			var debugSprite:Sprite = new Sprite();
-			
-			_container.addChild(debugSprite);
-			
-			return debugSprite;
 		}
 		
 	}

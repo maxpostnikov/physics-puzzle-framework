@@ -27,6 +27,8 @@ package ru.maxpostnikov.engine.core
 		private const _DEBUGDRAW_ALPHA:Number = 0.8;
 		private const _DEBUGDRAW_LINETHICKNESS:Number = 2;
 		
+		public var isDebuged:Boolean;
+		
 		private var _world:b2World;
 		
 		public function Physics(ratio:Number, contactListener:b2ContactListener, debugSprite:Sprite = null) 
@@ -42,7 +44,7 @@ package ru.maxpostnikov.engine.core
 			_world.Step(_DT, _ITERATIONS_VELOCITY, _ITERATIONS_POSITION);
 			_world.ClearForces();
 			
-			_world.DrawDebugData();
+			if (isDebuged) _world.DrawDebugData();
 		}
 		
 		public function addBody(component:Component):void 
@@ -61,6 +63,8 @@ package ru.maxpostnikov.engine.core
 		public function removeBody(component:Component):void 
 		{
 			_world.DestroyBody(component.body);
+			
+			component.body = null;
 		}
 		
 		private function initDebugDraw(ratio:Number, sprite:Sprite):void 

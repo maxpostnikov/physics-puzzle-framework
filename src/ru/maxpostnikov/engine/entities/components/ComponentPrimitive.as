@@ -7,7 +7,6 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-	import flash.events.Event;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
 	/**
@@ -44,14 +43,15 @@ package ru.maxpostnikov.engine.entities.components
 		[Inspectable(type="Boolean", defaultValue="false")]
 		public var isBullet:Boolean = false;
 		
-		override protected function onInit(e:Event):void 
+		public function ComponentPrimitive() 
 		{
-			super.onInit(e);
-			
 			hide();
-			
+		}
+		
+		override public function add():void 
+		{
 			bodyDef = createBodyDef();
-			if (!fixtureDefs) fixtureDefs = createFixtureDefs();
+			fixtureDefs = createFixtureDefs();
 		}
 		
 		private function createBodyDef():b2BodyDef 

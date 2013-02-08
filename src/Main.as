@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import ru.maxpostnikov.engine.Engine;
 	
 	/**
@@ -11,6 +12,8 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		
+		private var _level:Level;
 		
 		public function Main():void 
 		{
@@ -27,7 +30,28 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Engine.getInstacne().launch(this);
-			addChild(new Level());
+			
+			addLevel();
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
+		}
+		
+		private function onKey(e:KeyboardEvent):void 
+		{
+			if (e.keyCode == 82) {
+				removeChild(_level);
+				addLevel();
+			}
+			
+			if (e.keyCode == 68)
+				Engine.getInstacne().debug();
+			else if (e.keyCode == 80)
+				Engine.getInstacne().pause();
+		}
+		
+		private function addLevel():void 
+		{
+			_level = new Level();
+			addChild(_level);
 		}
 		
 	}

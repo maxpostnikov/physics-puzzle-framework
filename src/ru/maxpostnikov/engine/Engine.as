@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine 
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import ru.maxpostnikov.engine.core.Loop;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	/**
@@ -12,12 +13,15 @@ package ru.maxpostnikov.engine
 		
 		public static const RATIO:Number = 30;
 		
-		private const _BORDER_WIDTH:Number = 50;
-		private const _BORDER_HEIGHT:Number = 50;
+		private const _BORDER_WIDTH:Number = 0;
+		private const _BORDER_HEIGHT:Number = 0;
 		
 		private var _loop:Loop;
 		private var _width:Number;
 		private var _height:Number;
+		private var _debugSprite:Sprite;
+		private var _isDebuged:Boolean;
+		private var _isPaused:Boolean;
 		
 		private static var _instance:Engine;
 		
@@ -33,7 +37,7 @@ package ru.maxpostnikov.engine
 		
 		public function launch(container:DisplayObjectContainer):void 
 		{
-			_loop = new Loop(container, RATIO);
+			_loop = new Loop(container, RATIO, createDebugSprite(container));
 			
 			_width = container.stage.stageWidth + _BORDER_WIDTH;
 			_height = container.stage.stageHeight + _BORDER_HEIGHT;
@@ -42,6 +46,40 @@ package ru.maxpostnikov.engine
 		public function process(object:IProcessable):void 
 		{
 			if (_loop.queue.indexOf(object) < 0) _loop.queue.push(object);
+		}
+		
+		public function pause():void 
+		{
+			if (_isPaused) {
+				_loop.start();
+				
+				_isPaused = false;
+			} else {
+				_loop.stop();
+				
+				_isPaused = true;
+			}
+		}
+		
+		public function debug():void 
+		{
+			if (_isDebuged)
+				_isDebuged = false;
+			else
+				_isDebuged = true;
+			
+			_loop.debug(_isDebuged);
+			_debugSprite.visible = _isDebuged;
+		}
+		
+		private function createDebugSprite(container:DisplayObjectContainer):Sprite 
+		{
+			_debugSprite = new Sprite();
+			_debugSprite.visible = _isDebuged;
+			
+			container.addChild(_debugSprite);
+			
+			return _debugSprite;
 		}
 		
 		public function get width():Number { return _width; }
