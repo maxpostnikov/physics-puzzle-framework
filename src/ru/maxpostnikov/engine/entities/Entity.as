@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.entities 
 {
+	import Box2D.Dynamics.b2Fixture;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -68,6 +69,11 @@ package ru.maxpostnikov.engine.entities
 				
 				if (component.isOutsideBorder()) removeComponent(component, true);
 			}
+		}
+		
+		public function contact(type:String, fixture:b2Fixture, entity:Entity, impulse:Number):void 
+		{
+			//Override
 		}
 		
 		private function removeComponent(component:Component, full:Boolean = false):void 

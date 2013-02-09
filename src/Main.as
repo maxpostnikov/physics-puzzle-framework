@@ -37,7 +37,7 @@ package
 		
 		private function onKey(e:KeyboardEvent):void 
 		{
-			if (e.keyCode == 82) {
+			if (e.keyCode == 82 && !Engine.getInstacne().isPaused) {
 				removeChild(_level);
 				addLevel();
 			}

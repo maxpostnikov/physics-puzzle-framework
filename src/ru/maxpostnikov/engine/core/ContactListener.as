@@ -1,12 +1,50 @@
 package ru.maxpostnikov.engine.core 
 {
+	import Box2D.Collision.b2Manifold;
+	import Box2D.Dynamics.b2ContactImpulse;
 	import Box2D.Dynamics.b2ContactListener;
+	import Box2D.Dynamics.Contacts.b2Contact;
+	import ru.maxpostnikov.engine.entities.Entity;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
-	internal class ContactListener extends b2ContactListener
+	public class ContactListener extends b2ContactListener
 	{
+		
+		public static const BEGIN_CONTACT:String = "BeginContact";
+		public static const END_CONTACT:String = "EndContact";
+		public static const PRE_SOLVE:String = "PreSolve";
+		public static const POST_SOLVE:String = "PostSolve";
+		
+		override public function BeginContact(contact:b2Contact):void 
+		{
+			sendContact(BEGIN_CONTACT, contact);
+		}
+		
+		override public function EndContact(contact:b2Contact):void 
+		{
+			sendContact(END_CONTACT, contact);
+		}
+		
+		override public function PreSolve(contact:b2Contact, oldManifold:b2Manifold):void 
+		{
+			sendContact(PRE_SOLVE, contact);
+		}
+		
+		override public function PostSolve(contact:b2Contact, impulse:b2ContactImpulse):void 
+		{
+			sendContact(POST_SOLVE, contact, impulse.normalImpulses[0]);
+		}
+		
+		private function sendContact(type:String, contact:b2Contact, impulse:Number = 0):void 
+		{
+			var entityA:Entity = contact.GetFixtureA().GetBody().GetUserData().parent as Entity;
+			var entityB:Entity = contact.GetFixtureB().GetBody().GetUserData().parent as Entity;
+			
+			entityA.contact(type, contact.GetFixtureA(), entityB, impulse);
+			entityB.contact(type, contact.GetFixtureB(), entityA, impulse);
+		}
 		
 	}
 

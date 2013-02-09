@@ -19,7 +19,6 @@ package ru.maxpostnikov.engine
 		private var _loop:Loop;
 		private var _width:Number;
 		private var _height:Number;
-		private var _debugSprite:Sprite;
 		private var _isDebuged:Boolean;
 		private var _isPaused:Boolean;
 		
@@ -37,7 +36,7 @@ package ru.maxpostnikov.engine
 		
 		public function launch(container:DisplayObjectContainer):void 
 		{
-			_loop = new Loop(container, RATIO, createDebugSprite(container));
+			_loop = new Loop(container, RATIO);
 			
 			_width = container.stage.stageWidth + _BORDER_WIDTH;
 			_height = container.stage.stageHeight + _BORDER_HEIGHT;
@@ -69,22 +68,13 @@ package ru.maxpostnikov.engine
 				_isDebuged = true;
 			
 			_loop.debug(_isDebuged);
-			_debugSprite.visible = _isDebuged;
-		}
-		
-		private function createDebugSprite(container:DisplayObjectContainer):Sprite 
-		{
-			_debugSprite = new Sprite();
-			_debugSprite.visible = _isDebuged;
-			
-			container.addChild(_debugSprite);
-			
-			return _debugSprite;
 		}
 		
 		public function get width():Number { return _width; }
 		
 		public function get height():Number { return _height; }
+		
+		public function get isPaused():Boolean { return _isPaused; }
 		
 	}
 
