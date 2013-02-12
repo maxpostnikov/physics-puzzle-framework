@@ -2,6 +2,7 @@ package ru.maxpostnikov.engine
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import ru.maxpostnikov.engine.core.Loop;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	/**

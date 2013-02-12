@@ -4,10 +4,13 @@ package ru.maxpostnikov.engine.core
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2ContactListener;
 	import Box2D.Dynamics.b2DebugDraw;
+	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import ru.maxpostnikov.engine.entities.components.Component;
+	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
 	import ru.maxpostnikov.engine.entities.components.ComponentPrimitive;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
@@ -30,6 +33,7 @@ package ru.maxpostnikov.engine.core
 		public var isDebuged:Boolean;
 		
 		private var _world:b2World;
+		private var _jointBodies:Vector.<b2Body>;
 		
 		public function Physics(ratio:Number, contactListener:b2ContactListener, debugSprite:Sprite = null) 
 		{
@@ -65,6 +69,32 @@ package ru.maxpostnikov.engine.core
 			_world.DestroyBody(component.body);
 			
 			component.body = null;
+		}
+		
+		public function addJoint(component:ComponentJoint):void 
+		{
+			queryPoints(component.anchorPoints);
+			
+			if (_jointBodies.length > 0) {
+				if (_jointBodies.length == 1) _jointBodies.push(_world.GetGroundBody());
+				
+				component.joint = _world.CreateJoint(component.createJointDef(_jointBodies));
+			}
+		}
+		
+		private function queryPoints(points:Vector.<Point>):void 
+		{
+			_jointBodies = new <b2Body>[];
+			
+			for each (var point:Point in points)
+				_world.QueryPoint(queryPointsCallback, new b2Vec2(point.x, point.y));
+		}
+		
+		private function queryPointsCallback(fixture:b2Fixture):Boolean 
+		{
+			_jointBodies.push(fixture.GetBody());
+			
+			return true;
 		}
 		
 		private function initDebugDraw(ratio:Number, sprite:Sprite):void 

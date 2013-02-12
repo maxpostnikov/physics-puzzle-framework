@@ -36,6 +36,8 @@ package ru.maxpostnikov.engine.entities.components
 			
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
+			
+			super.add();
 		}
 		
 		override public function remove():void 

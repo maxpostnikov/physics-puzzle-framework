@@ -28,7 +28,7 @@ package ru.maxpostnikov.engine.entities.components
 		
 		public function add():void 
 		{
-			//Override
+			Engine.getInstacne().process(this);
 		}
 		
 		public function remove():void 

@@ -3,7 +3,9 @@ package ru.maxpostnikov.engine.core
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import ru.maxpostnikov.engine.entities.components.Component;
+	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	/**
@@ -17,15 +19,13 @@ package ru.maxpostnikov.engine.core
 		
 		private var _entities:Vector.<Entity>;
 		private var _physics:Physics;
-		private var _contactListener:ContactListener;
 		private var _container:DisplayObjectContainer;
 		private var _debugSprite:Sprite;
 		
 		public function Loop(container:DisplayObjectContainer, ratio:Number) 
 		{
 			_container = container;
-			_contactListener = new ContactListener();
-			_physics = new Physics(ratio, _contactListener, createDebugSprite());
+			_physics = new Physics(ratio, new ContactListener(), createDebugSprite());
 			
 			queue = new <IProcessable>[];
 			_entities = new <Entity>[];
@@ -69,19 +69,20 @@ package ru.maxpostnikov.engine.core
 		{
 			for each (var object:IProcessable in queue) {
 				if (object is Entity) {
-					if (object.isRemoved) {
-						_entities.splice(_entities.indexOf(object as Entity), 1);
-					} else {
-						for each (var component:Component in (object as Entity).components)
-							_physics.addBody(component);
-						
-						_entities.push(object as Entity);
-					}
-				} else if (object is Component) {
 					if (object.isRemoved)
-						_physics.removeBody(object as Component);
+						_entities.splice(_entities.indexOf(object as Entity), 1);
 					else
-						_physics.addBody(object as Component);
+						_entities.push(object as Entity);
+				} else if (object is Component) {
+					if (object is ComponentJoint) {
+						if (!object.isRemoved)
+							_physics.addJoint(object as ComponentJoint);
+					} else {
+						if (object.isRemoved)
+							_physics.removeBody(object as Component);
+						else
+							_physics.addBody(object as Component);
+					}
 				}
 			}
 			

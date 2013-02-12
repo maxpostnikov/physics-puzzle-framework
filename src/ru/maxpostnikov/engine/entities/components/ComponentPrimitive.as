@@ -52,6 +52,8 @@ package ru.maxpostnikov.engine.entities.components
 		{
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
+			
+			super.add();
 		}
 		
 		private function createBodyDef():b2BodyDef 

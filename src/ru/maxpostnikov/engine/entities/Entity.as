@@ -87,8 +87,6 @@ package ru.maxpostnikov.engine.entities
 		
 		public function get isRemoved():Boolean { return _isRemoved; }
 		
-		public function get components():Vector.<Component> { return _components; }
-		
 	}
 
 }
