@@ -2,6 +2,7 @@ package ru.maxpostnikov.utilities
 {
 	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
+	import flash.utils.getDefinitionByName;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -37,6 +38,19 @@ package ru.maxpostnikov.utilities
 			mc.rotation = rotation;
 			
 			return size;
+		}
+		
+		public static function getDefinition(name:String):Object 
+		{
+			var object:Object;
+			
+			try {
+				object = getDefinitionByName(name);
+			} catch (e:Error) {
+				trace("get definition error " + e.message);
+			} finally {
+				return object;
+			}
 		}
 		
 	}

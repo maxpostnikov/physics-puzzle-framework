@@ -4,6 +4,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.Joints.b2JointDef;
 	import Box2D.Dynamics.Joints.b2RevoluteJointDef;
+	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -20,8 +21,8 @@ package ru.maxpostnikov.engine.entities.components
 			jointDef.collideConnected = this.collideConnected;
 			
 			(jointDef as b2RevoluteJointDef).enableLimit = this.enableLimit;
-			(jointDef as b2RevoluteJointDef).lowerAngle = this.lowerAngle;
-			(jointDef as b2RevoluteJointDef).upperAngle = this.upperAngle;
+			(jointDef as b2RevoluteJointDef).lowerAngle = Utils.angleInRadians(this.lowerAngle);
+			(jointDef as b2RevoluteJointDef).upperAngle = Utils.angleInRadians(this.upperAngle);
 			(jointDef as b2RevoluteJointDef).enableMotor = this.enableMotor;
 			(jointDef as b2RevoluteJointDef).motorSpeed = this.motorSpeed;
 			(jointDef as b2RevoluteJointDef).maxMotorTorque = this.maxMotorTorque;

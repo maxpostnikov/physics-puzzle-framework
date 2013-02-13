@@ -4,6 +4,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.Joints.b2JointDef;
 	import Box2D.Dynamics.Joints.b2PrismaticJointDef;
+	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
@@ -22,8 +23,8 @@ package ru.maxpostnikov.engine.entities.components
 			
 			(jointDef as b2PrismaticJointDef).enableLimit = this.enableLimit;
 			(jointDef as b2PrismaticJointDef).enableMotor = this.enableMotor;
-			(jointDef as b2PrismaticJointDef).lowerTranslation = this.lowerTranslation;
-			(jointDef as b2PrismaticJointDef).upperTranslation = this.upperTranslation;
+			(jointDef as b2PrismaticJointDef).lowerTranslation = this.lowerTranslation / Engine.RATIO;
+			(jointDef as b2PrismaticJointDef).upperTranslation = this.upperTranslation / Engine.RATIO;
 			(jointDef as b2PrismaticJointDef).maxMotorForce = this.maxMotorForce;
 			(jointDef as b2PrismaticJointDef).motorSpeed = this.motorSpeed;
 			

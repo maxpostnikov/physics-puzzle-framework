@@ -58,7 +58,8 @@ package ru.maxpostnikov.engine.entities.components
 		override public function add():void 
 		{
 			for (var i:int = 1; i <= anchors; i++) {
-				var point:Point = this.parent.localToGlobal(new Point(this['point_' + i].x + this.x, this['point_' + i].y + this.y));
+				var point:Point = new Point(this.x + this['point_' + i].x, this.y + this['point_' + i].y);
+				point = this.parent.localToGlobal(point);
 				point.x /= Engine.RATIO;
 				point.y /= Engine.RATIO;
 				
