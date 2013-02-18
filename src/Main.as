@@ -13,8 +13,6 @@ package
 	public class Main extends Sprite 
 	{
 		
-		private var _level:Level;
-		
 		public function Main():void 
 		{
 			if (stage) 
@@ -30,28 +28,26 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Engine.getInstacne().launch(this);
+			Engine.getInstacne().levels.addLevel(1);
 			
-			addLevel();
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
 		}
 		
 		private function onKey(e:KeyboardEvent):void 
 		{
-			if (e.keyCode == 82 && !Engine.getInstacne().isPaused) {
-				removeChild(_level);
-				addLevel();
+			if (!Engine.getInstacne().isPaused) {
+				if (e.keyCode == 82)
+					Engine.getInstacne().levels.restartLevel();
+				else if (e.keyCode == 37)
+					Engine.getInstacne().levels.prevLevel();
+				else if (e.keyCode == 39)
+					Engine.getInstacne().levels.nextLevel();
 			}
 			
 			if (e.keyCode == 68)
 				Engine.getInstacne().debug();
 			else if (e.keyCode == 80)
 				Engine.getInstacne().pause();
-		}
-		
-		private function addLevel():void 
-		{
-			_level = new Level();
-			addChild(_level);
 		}
 		
 	}

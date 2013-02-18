@@ -5,6 +5,7 @@ package ru.maxpostnikov.engine
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.core.Loop;
 	import ru.maxpostnikov.engine.entities.IProcessable;
+	import ru.maxpostnikov.engine.managers.Levels;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -18,6 +19,7 @@ package ru.maxpostnikov.engine
 		private const _BORDER_HEIGHT:Number = 0;
 		
 		private var _loop:Loop;
+		private var _levels:Levels;
 		private var _width:Number;
 		private var _height:Number;
 		private var _isDebuged:Boolean;
@@ -38,6 +40,7 @@ package ru.maxpostnikov.engine
 		public function launch(container:DisplayObjectContainer):void 
 		{
 			_loop = new Loop(container, RATIO);
+			_levels = new Levels(container);
 			
 			_width = container.stage.stageWidth + _BORDER_WIDTH;
 			_height = container.stage.stageHeight + _BORDER_HEIGHT;
@@ -59,6 +62,8 @@ package ru.maxpostnikov.engine
 				
 				_isPaused = true;
 			}
+			
+			_levels.pause();
 		}
 		
 		public function debug():void 
@@ -76,6 +81,8 @@ package ru.maxpostnikov.engine
 		public function get height():Number { return _height; }
 		
 		public function get isPaused():Boolean { return _isPaused; }
+		
+		public function get levels():Levels { return _levels; }
 		
 	}
 

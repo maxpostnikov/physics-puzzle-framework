@@ -28,7 +28,6 @@ package ru.maxpostnikov.engine.entities
 			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true);
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -41,20 +40,12 @@ package ru.maxpostnikov.engine.entities
 			Engine.getInstacne().process(this);
 		}
 		
-		private function onRemovedFromStage(e:Event):void 
-		{
-			remove();
-		}
-		
 		public function remove():void 
 		{
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			
 			for (var i:int = _components.length - 1; i >= 0; i--)
 				removeComponent(_components[i]);
 			
-			//this.parent.removeChild(this);
-			this.visible = false;
+			this.parent.removeChild(this);
 			
 			_isRemoved = true;
 			Engine.getInstacne().process(this);
