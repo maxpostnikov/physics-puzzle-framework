@@ -1,11 +1,10 @@
-package ru.maxpostnikov.engine.managers 
+package ru.maxpostnikov.engine.core 
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import ru.maxpostnikov.engine.entities.Entity;
-	import ru.maxpostnikov.game.LevelData;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
@@ -35,6 +34,22 @@ package ru.maxpostnikov.engine.managers
 			_data = new <LevelData>[];
 			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
 				_data.push(new LevelData());
+		}
+		
+		public function save():Array 
+		{
+			var data:Array = [];
+			
+			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
+				data.push(_data[i].save());
+			
+			return data;
+		}
+		
+		public function load(data:Array):void 
+		{
+			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
+				_data[i].load(data[i]);
 		}
 		
 		public function pause():void 
@@ -101,6 +116,16 @@ package ru.maxpostnikov.engine.managers
 		{
 			_data[_currentLevel - 1].step();
 		}
+		
+		public function get lastLevel():int 
+		{
+			for (var i:int = _LEVEL_TOTAL - 1; i >= 0; i--) 
+				if (!_data[i].isClosed) return i + 1;
+			
+			return 1;
+		}
+		
+		public function get currentLevelData():LevelData { return _data[_currentLevel - 1]; }
 		
 	}
 

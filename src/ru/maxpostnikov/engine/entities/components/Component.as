@@ -33,8 +33,7 @@ package ru.maxpostnikov.engine.entities.components
 		
 		public function remove():void 
 		{
-			//this.parent.removeChild(this);
-			this.visible = false;
+			this.parent.removeChild(this);
 			
 			_isRemoved = true;
 			Engine.getInstacne().process(this);

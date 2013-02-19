@@ -3,7 +3,6 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	import ru.maxpostnikov.engine.Engine;
 	
 	/**
@@ -27,27 +26,8 @@ package
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			Engine.getInstacne().launch(this);
+			Engine.getInstacne().launch(this, "Test", true);
 			Engine.getInstacne().levels.addLevel(1);
-			
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
-		}
-		
-		private function onKey(e:KeyboardEvent):void 
-		{
-			if (!Engine.getInstacne().isPaused) {
-				if (e.keyCode == 82)
-					Engine.getInstacne().levels.restartLevel();
-				else if (e.keyCode == 37)
-					Engine.getInstacne().levels.prevLevel();
-				else if (e.keyCode == 39)
-					Engine.getInstacne().levels.nextLevel();
-			}
-			
-			if (e.keyCode == 68)
-				Engine.getInstacne().debug();
-			else if (e.keyCode == 80)
-				Engine.getInstacne().pause();
 		}
 		
 	}

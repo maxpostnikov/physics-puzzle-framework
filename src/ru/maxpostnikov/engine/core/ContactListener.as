@@ -4,6 +4,7 @@ package ru.maxpostnikov.engine.core
 	import Box2D.Dynamics.b2ContactImpulse;
 	import Box2D.Dynamics.b2ContactListener;
 	import Box2D.Dynamics.Contacts.b2Contact;
+	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.Entity;
 	/**
 	 * ...
@@ -39,11 +40,16 @@ package ru.maxpostnikov.engine.core
 		
 		private function sendContact(type:String, contact:b2Contact, impulse:Number = 0):void 
 		{
-			var entityA:Entity = contact.GetFixtureA().GetBody().GetUserData().parent as Entity;
-			var entityB:Entity = contact.GetFixtureB().GetBody().GetUserData().parent as Entity;
+			var componentA:Component = contact.GetFixtureA().GetBody().GetUserData() as Component;
+			var componentB:Component = contact.GetFixtureB().GetBody().GetUserData() as Component;
 			
-			entityA.contact(type, contact.GetFixtureA(), entityB, impulse);
-			entityB.contact(type, contact.GetFixtureB(), entityA, impulse);
+			if (!componentA.isRemoved && !componentB.isRemoved) {
+				var entityA:Entity = componentA.parent as Entity;
+				var entityB:Entity = componentB.parent as Entity;
+				
+				entityA.contact(type, contact.GetFixtureA(), entityB, impulse);
+				entityB.contact(type, contact.GetFixtureB(), entityA, impulse);
+			}
 		}
 		
 	}
