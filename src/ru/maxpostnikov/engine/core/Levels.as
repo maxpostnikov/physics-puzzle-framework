@@ -119,7 +119,7 @@ package ru.maxpostnikov.engine.core
 		
 		public function get lastLevel():int 
 		{
-			for (var i:int = _LEVEL_TOTAL - 1; i >= 0; i--) 
+			for (var i:int = _LEVEL_TOTAL - 1; i >= 0; i--)
 				if (!_data[i].isClosed) return i + 1;
 			
 			return 1;

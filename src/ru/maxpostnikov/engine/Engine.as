@@ -3,10 +3,12 @@ package ru.maxpostnikov.engine
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.media.Sound;
 	import ru.maxpostnikov.engine.core.KeyInput;
 	import ru.maxpostnikov.engine.core.Loop;
 	import ru.maxpostnikov.engine.core.Cookie;
 	import ru.maxpostnikov.engine.core.Levels;
+	import ru.maxpostnikov.engine.core.Sounds;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	/**
 	 * ...
@@ -21,12 +23,14 @@ package ru.maxpostnikov.engine
 		private const _BORDER_HEIGHT:Number = 0;
 		
 		private var _loop:Loop;
+		private var _sounds:Sounds;
 		private var _cookie:Cookie;
 		private var _levels:Levels;
 		private var _keyInput:KeyInput;
 		
 		private var _width:Number;
 		private var _height:Number;
+		private var _isMuted:Boolean;
 		private var _isPaused:Boolean;
 		private var _isDebuged:Boolean;
 		private var _isDebugAllowed:Boolean;
@@ -46,6 +50,7 @@ package ru.maxpostnikov.engine
 		public function launch(container:DisplayObjectContainer, cookieName:String, debug:Boolean = false):void 
 		{
 			_loop = new Loop(container, RATIO);
+			_sounds = new Sounds();
 			_cookie = new Cookie(cookieName);
 			_levels = new Levels(container);
 			_keyInput = new KeyInput(container);
@@ -62,17 +67,53 @@ package ru.maxpostnikov.engine
 			if (_loop.queue.indexOf(object) < 0) _loop.queue.push(object);
 		}
 		
+		public function playSound(sound:Sound, loops:int = int.MAX_VALUE):void 
+		{
+			_sounds.play(sound, loops);
+		}
+		
+		public function stopSound(sound:Sound):void 
+		{
+			_sounds.stop(sound);
+		}
+		
+		public function openLevel(level:int):void 
+		{
+			_levels.addLevel(level);
+			save();
+		}
+		
+		public function openLastLevel():void 
+		{
+			_levels.addLevel(_levels.lastLevel);
+			save();
+		}
+		
+		public function openNextLevel():void 
+		{
+			_levels.nextLevel();
+			save();
+		}
+		
+		public function openPrevLevel():void 
+		{
+			_levels.prevLevel();
+		}
+		
+		public function restartLevel():void 
+		{
+			_levels.restartLevel();
+		}
+		
 		public function win():void 
 		{
 			_levels.currentLevelData.passed();
-			
 			save();
 		}
 		
 		public function reset():void 
 		{
 			_levels.resetLevels();
-			
 			save();
 		}
 		
@@ -80,10 +121,13 @@ package ru.maxpostnikov.engine
 		{
 			if (_isPaused) {
 				_loop.start();
+				if (!_isMuted) 
+					_sounds.mute(false);
 				
 				_isPaused = false;
 			} else {
 				_loop.stop();
+				_sounds.mute(true);
 				
 				_isPaused = true;
 			}
@@ -101,15 +145,21 @@ package ru.maxpostnikov.engine
 			_loop.debug(_isDebuged);
 		}
 		
+		public function mute():void 
+		{
+			if (_isMuted)
+				_isMuted = false;
+			else
+				_isMuted = true;
+			
+			_sounds.mute(_isMuted);
+		}
+		
 		private function load():void 
 		{
 			var data:Object = _cookie.load();
 			
-			if (data) {
-				_levels.load(data.levels);
-			} else {
-				save();
-			}
+			if (data) _levels.load(data.levels);
 		}
 		
 		private function save():void 
@@ -124,8 +174,6 @@ package ru.maxpostnikov.engine
 		public function get isPaused():Boolean { return _isPaused; }
 		
 		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
-		
-		public function get levels():Levels { return _levels; }
 		
 	}
 
