@@ -47,6 +47,7 @@
   <!-- SWC Include Libraries -->
   <includeLibraries>
     <element path="lib\Library.swc" />
+    <element path="lib\UI.swc" />
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>

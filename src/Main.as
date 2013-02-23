@@ -27,7 +27,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Engine.getInstacne().launch(this, "Test", true);
-			Engine.getInstacne().openLastLevel();
+			//Engine.getInstacne().openLastLevel();
 		}
 		
 	}
