@@ -9,8 +9,8 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.core.Cookie;
 	import ru.maxpostnikov.engine.core.Levels;
 	import ru.maxpostnikov.engine.core.Sounds;
-	import ru.maxpostnikov.engine.entities.IProcessable;
 	import ru.maxpostnikov.engine.ui.Canvas;
+	import ru.maxpostnikov.engine.entities.IProcessable;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
 	/**
 	 * ...
@@ -64,8 +64,6 @@ package ru.maxpostnikov.engine
 			_isDebugAllowed = debug;
 			_width = container.stage.stageWidth + _BORDER_WIDTH;
 			_height = container.stage.stageHeight + _BORDER_HEIGHT;
-			
-			_canvas.showScreen(ScreenMainMenu.ID);
 		}
 		
 		public function process(object:IProcessable):void 
@@ -81,6 +79,19 @@ package ru.maxpostnikov.engine
 		public function stopSound(sound:Sound):void 
 		{
 			_sounds.stop(sound);
+		}
+		
+		public function showScreen(id:uint, data:Object = null):void 
+		{
+			if (id == ScreenMainMenu.ID && _levels.lastLevel > 1)
+				data = { isResumed:true };
+			
+			_canvas.showScreen(id, data);
+		}
+		
+		public function hideScreen(id:uint):void 
+		{
+			_canvas.hideScreen(id);
 		}
 		
 		public function openLevel(level:int):void 
