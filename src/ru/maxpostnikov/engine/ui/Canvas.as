@@ -33,6 +33,13 @@ package ru.maxpostnikov.engine.ui
 			_container.addChild(screen);
 		}
 		
+		public function updateScreen(id:uint, data:Object):void 
+		{
+			var screen:Screen = _screens[id];
+			
+			screen.update(data);
+		}
+		
 		public function hideScreen(id:uint):void 
 		{
 			var screen:Screen = _screens[id];

@@ -2,6 +2,8 @@ package ru.maxpostnikov.utilities
 {
 	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	import flash.utils.getDefinitionByName;
 	/**
 	 * ...
@@ -51,6 +53,11 @@ package ru.maxpostnikov.utilities
 			} finally {
 				return object;
 			}
+		}
+		
+		public static function openURL(url:String, window:String = "_blank"):void 
+		{
+			navigateToURL(new URLRequest(url), window);
 		}
 		
 	}

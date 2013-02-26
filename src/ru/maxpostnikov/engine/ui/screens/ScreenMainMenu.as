@@ -13,10 +13,12 @@ package ru.maxpostnikov.engine.ui.screens
 		public static const ID:uint = 1;
 		
 		private var _isResumed:Boolean;
+		private var _buttonPlay:ButtonPlay;
+		private var _buttonResume:ButtonResume;
 		
 		public function ScreenMainMenu() 
 		{
-			visual = new mainMenu();
+			visual = new sMainMenu();
 			
 			super();
 		}
@@ -25,22 +27,35 @@ package ru.maxpostnikov.engine.ui.screens
 		{
 			super.show(data);
 			
-			_isResumed = data.isResumed;
+			if (data)
+				_isResumed = data.isResumed;
 			
 			if (_isResumed) {
-				for (var i:int = 0; i < visual.numChildren; i++) {
-					var child:DisplayObject = visual.getChildAt(i);
-					
-					if (child is ButtonPlay) {
-						var bResume:ButtonResume = new buttonResume();
+				if (!_buttonResume) {
+					for (var i:int = 0; i < visual.numChildren; i++) {
+						var child:DisplayObject = visual.getChildAt(i);
 						
-						bResume.x = child.x;
-						bResume.y = child.y;
-						
-						visual.addChild(bResume);
-						visual.removeChild(child);
-						break;
+						if (child is ButtonPlay) {
+							_buttonPlay = child as ButtonPlay;
+							_buttonResume = new bResume();
+							
+							_buttonResume.x = child.x;
+							_buttonResume.y = child.y;
+							
+							visual.addChild(_buttonResume);
+							break;
+						}
 					}
+				}
+				
+				if (_buttonPlay && _buttonResume) {
+					_buttonPlay.visible = false;
+					_buttonResume.visible = true;
+				}
+			} else {
+				if (_buttonPlay && _buttonResume) {
+					_buttonPlay.visible = true;
+					_buttonResume.visible = false;
 				}
 			}
 		}

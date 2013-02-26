@@ -20,6 +20,11 @@ package ru.maxpostnikov.engine.ui.screens
 			
 		}
 		
+		public function update(data:Object):void 
+		{
+			
+		}
+		
 		public function hide():void 
 		{
 			

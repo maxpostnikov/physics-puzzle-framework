@@ -13,7 +13,6 @@ package ru.maxpostnikov.engine.core
 		private static const _KEY_R:int = 82;
 		private static const _KEY_D:int = 68;
 		private static const _KEY_P:int = 80;
-		private static const _KEY_S:int = 83;
 		private static const _KEY_LEFT:int = 37;
 		private static const _KEY_RIGHT:int = 39;
 		
@@ -27,8 +26,6 @@ package ru.maxpostnikov.engine.core
 			if (!Engine.getInstacne().isPaused) {
 				if (e.keyCode == _KEY_R)
 					Engine.getInstacne().restartLevel();
-				else if (e.keyCode == _KEY_S)
-					Engine.getInstacne().mute();
 				
 				if (Engine.getInstacne().isDebugAllowed) {
 					if (e.keyCode == _KEY_D)

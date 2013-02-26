@@ -13,7 +13,7 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		public function ScreenLevelMap() 
 		{
-			visual = new levelMap();
+			visual = new sLevelMap();
 			
 			super();
 		}
@@ -21,6 +21,13 @@ package ru.maxpostnikov.engine.ui.screens
 		override public function show(data:Object = null):void 
 		{
 			super.show(data);
+			
+			_isResumed = data.isResumed;
+		}
+		
+		override public function update(data:Object):void 
+		{
+			super.update(data);
 			
 			_isResumed = data.isResumed;
 		}

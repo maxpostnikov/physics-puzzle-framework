@@ -89,6 +89,11 @@ package ru.maxpostnikov.engine
 			_canvas.showScreen(id, data);
 		}
 		
+		public function updateScreen(id:uint, data:Object):void 
+		{
+			_canvas.updateScreen(id, data);
+		}
+		
 		public function hideScreen(id:uint):void 
 		{
 			_canvas.hideScreen(id);
