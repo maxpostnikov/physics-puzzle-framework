@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine.ui.buttons 
 {
 	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -10,8 +11,10 @@ package ru.maxpostnikov.engine.ui.buttons
 		
 		override protected function click():void 
 		{
-			Engine.getInstacne().hideScreen(this.screen.getID());
 			Engine.getInstacne().openLastLevel();
+			Engine.getInstacne().hideScreen(ScreenBack.ID);
+			
+			super.click();
 		}
 		
 	}

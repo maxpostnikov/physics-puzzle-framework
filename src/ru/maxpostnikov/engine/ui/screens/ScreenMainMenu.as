@@ -10,7 +10,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenMainMenu extends Screen
 	{
 		
-		public static const ID:uint = 1;
+		public static const ID:uint = 3;
 		
 		private var _isResumed:Boolean;
 		private var _buttonPlay:ButtonPlay;
@@ -20,42 +20,48 @@ package ru.maxpostnikov.engine.ui.screens
 		{
 			visual = new sMainMenu();
 			
+			initButtonsPlayResume();
+			
 			super();
 		}
 		
 		override public function show(data:Object = null):void 
 		{
-			super.show(data);
+			update(data);
 			
-			if (data)
-				_isResumed = data.isResumed;
-			
-			if (_isResumed) {
-				if (!_buttonResume) {
-					for (var i:int = 0; i < visual.numChildren; i++) {
-						var child:DisplayObject = visual.getChildAt(i);
-						
-						if (child is ButtonPlay) {
-							_buttonPlay = child as ButtonPlay;
-							_buttonResume = new bResume();
-							
-							_buttonResume.x = child.x;
-							_buttonResume.y = child.y;
-							
-							visual.addChild(_buttonResume);
-							break;
-						}
-					}
-				}
-				
-				if (_buttonPlay && _buttonResume) {
+			if (_buttonPlay && _buttonResume) {
+				if (_isResumed) {
 					_buttonPlay.visible = false;
 					_buttonResume.visible = true;
-				}
-			} else {
-				if (_buttonPlay && _buttonResume) {
+				} else {
 					_buttonPlay.visible = true;
 					_buttonResume.visible = false;
+				}
+			}
+		}
+		
+		override public function update(data:Object):void 
+		{
+			if (data) _isResumed = data.isResumed;
+		}
+		
+		private function initButtonsPlayResume():void 
+		{
+			for (var i:int = 0; i < visual.numChildren; i++) {
+				var child:DisplayObject = visual.getChildAt(i);
+				
+				if (child is ButtonPlay) {
+					_buttonPlay = child as ButtonPlay;
+					_buttonResume = new bResume();
+					
+					_buttonResume.x = child.x;
+					_buttonResume.y = child.y;
+					_buttonResume.scaleX = child.scaleX;
+					_buttonResume.scaleY = child.scaleY;
+					_buttonResume.visible = false;
+					
+					visual.addChild(_buttonResume);
+					break;
 				}
 			}
 		}

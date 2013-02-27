@@ -125,6 +125,8 @@ package ru.maxpostnikov.engine.core
 			return 1;
 		}
 		
+		public function get data():Vector.<LevelData> { return _data; }
+		
 		public function get currentLevelData():LevelData { return _data[_currentLevel - 1]; }
 		
 	}

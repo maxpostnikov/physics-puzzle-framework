@@ -6,6 +6,7 @@ package ru.maxpostnikov.engine.ui.buttons
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.ui.screens.Screen;
 	/**
 	 * ...
@@ -59,7 +60,7 @@ package ru.maxpostnikov.engine.ui.buttons
 		
 		protected function click():void 
 		{
-			throw Error("Override Button -> click()");
+			Engine.getInstacne().hideScreen(this.screen.getID());
 		}
 		
 		private function onMouseUp(e:MouseEvent):void 

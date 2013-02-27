@@ -7,7 +7,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenReset extends Screen
 	{
 		
-		public static const ID:uint = 4;
+		public static const ID:uint = 6;
 		
 		public function ScreenReset() 
 		{

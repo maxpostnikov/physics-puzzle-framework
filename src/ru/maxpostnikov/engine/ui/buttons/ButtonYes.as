@@ -12,8 +12,9 @@ package ru.maxpostnikov.engine.ui.buttons
 		override protected function click():void 
 		{
 			Engine.getInstacne().reset();
-			Engine.getInstacne().updateScreen(ScreenLevelMap.ID, { isResumed:false } );
-			Engine.getInstacne().hideScreen(this.screen.getID());
+			Engine.getInstacne().showScreen(ScreenLevelMap.ID);
+			
+			super.click();
 		}
 		
 	}

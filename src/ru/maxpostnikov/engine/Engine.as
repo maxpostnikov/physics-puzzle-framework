@@ -2,6 +2,7 @@ package ru.maxpostnikov.engine
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.media.Sound;
 	import ru.maxpostnikov.engine.core.KeyInput;
@@ -11,7 +12,9 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.core.Sounds;
 	import ru.maxpostnikov.engine.ui.Canvas;
 	import ru.maxpostnikov.engine.entities.IProcessable;
+	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
+	import ru.maxpostnikov.engine.ui.screens.ScreenPause;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -64,6 +67,8 @@ package ru.maxpostnikov.engine
 			_isDebugAllowed = debug;
 			_width = container.stage.stageWidth + _BORDER_WIDTH;
 			_height = container.stage.stageHeight + _BORDER_HEIGHT;
+			
+			container.addEventListener(Event.DEACTIVATE, onDeactivate);
 		}
 		
 		public function process(object:IProcessable):void 
@@ -83,8 +88,11 @@ package ru.maxpostnikov.engine
 		
 		public function showScreen(id:uint, data:Object = null):void 
 		{
-			if (id == ScreenMainMenu.ID && _levels.lastLevel > 1)
-				data = { isResumed:true };
+			if (id == ScreenMainMenu.ID) {
+				_canvas.showScreen(ScreenBack.ID);
+				
+				if (_levels.lastLevel > 1) data = { isResumed:true };
+			}
 			
 			_canvas.showScreen(id, data);
 		}
@@ -127,6 +135,11 @@ package ru.maxpostnikov.engine
 			_levels.restartLevel();
 		}
 		
+		public function isLevelClosed(level:int):Boolean 
+		{
+			return _levels.data[level - 1].isClosed;
+		}
+		
 		public function win():void 
 		{
 			_levels.currentLevelData.passed();
@@ -136,6 +149,7 @@ package ru.maxpostnikov.engine
 		public function reset():void 
 		{
 			_levels.resetLevels();
+			_canvas.updateScreen(ScreenMainMenu.ID, { isResumed:false } );
 			save();
 		}
 		
@@ -143,6 +157,7 @@ package ru.maxpostnikov.engine
 		{
 			if (_isPaused) {
 				_loop.start();
+				_canvas.hideScreen(ScreenPause.ID);
 				if (!_isMuted) 
 					_sounds.mute(false);
 				
@@ -150,6 +165,7 @@ package ru.maxpostnikov.engine
 			} else {
 				_loop.stop();
 				_sounds.mute(true);
+				_canvas.showScreen(ScreenPause.ID);
 				
 				_isPaused = true;
 			}
@@ -189,6 +205,11 @@ package ru.maxpostnikov.engine
 			_cookie.save( { levels:_levels.save() } );
 		}
 		
+		private function onDeactivate(e:Event):void 
+		{
+			if (!_isPaused) pause();
+		}
+		
 		public function get width():Number { return _width; }
 		
 		public function get height():Number { return _height; }
@@ -196,6 +217,8 @@ package ru.maxpostnikov.engine
 		public function get isPaused():Boolean { return _isPaused; }
 		
 		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
+		
+		public function get totalLevels():int { return _levels.data.length; } 
 		
 	}
 

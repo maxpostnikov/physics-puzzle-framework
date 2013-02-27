@@ -22,7 +22,7 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		public function update(data:Object):void 
 		{
-			
+			throw Error("Override Screen -> update()");
 		}
 		
 		public function hide():void 

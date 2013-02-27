@@ -29,23 +29,28 @@ package ru.maxpostnikov.engine.ui
 		{
 			var screen:Screen = _screens[id];
 			
-			screen.show(data);
-			_container.addChild(screen);
+			if (screen) {
+				screen.show(data);
+				_container.addChild(screen);
+			}
 		}
 		
 		public function updateScreen(id:uint, data:Object):void 
 		{
 			var screen:Screen = _screens[id];
 			
-			screen.update(data);
+			if (screen)
+				screen.update(data);
 		}
 		
 		public function hideScreen(id:uint):void 
 		{
 			var screen:Screen = _screens[id];
 			
-			screen.hide();
-			_container.removeChild(screen);
+			if (screen) {
+				screen.hide();
+				_container.removeChild(screen);
+			}
 		}
 		
 	}
