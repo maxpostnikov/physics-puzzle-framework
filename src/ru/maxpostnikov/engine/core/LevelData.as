@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.core 
 {
+	import ru.maxpostnikov.game.GameData;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -7,10 +8,10 @@ package ru.maxpostnikov.engine.core
 	internal class LevelData 
 	{
 		
-		public static const SCORE_TIMER:Number = 0;
+		public static const SCORE_TIMER:Number = GameData.SCORE_TIMER;
 		
-		private const _SCORE_INITIAL:Number = 0;
-		private const _SCORE_ON_TIMER:Number = 0;
+		private const _SCORE_INITIAL:Number = GameData.SCORE_INITIAL;
+		private const _SCORE_ON_TIMER:Number = GameData.SCORE_ON_TIMER;
 		
 		private var _time:Number;
 		private var _score:Number;
@@ -57,6 +58,8 @@ package ru.maxpostnikov.engine.core
 			_isClosed = data.isClosed;
 			_isPassed = data.isPassed;
 		}
+		
+		public function get score():Number { return _score; }
 		
 		public function get isClosed():Boolean { return _isClosed; }
 		

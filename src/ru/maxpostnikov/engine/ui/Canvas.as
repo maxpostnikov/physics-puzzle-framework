@@ -2,7 +2,7 @@ package ru.maxpostnikov.engine.ui
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
-	import ru.maxpostnikov.game.GameData;
+	import ru.maxpostnikov.game.GameContent;
 	import ru.maxpostnikov.engine.ui.screens.Screen;
 	/**
 	 * ...
@@ -19,7 +19,7 @@ package ru.maxpostnikov.engine.ui
 			_container = container;
 			_screens = new Dictionary();
 			
-			for each (var screenClass:Class in GameData.SCREENS) {
+			for each (var screenClass:Class in GameContent.SCREENS) {
 				var screen:Screen = new screenClass();
 				_screens[screen.getID()] = screen;
 			}

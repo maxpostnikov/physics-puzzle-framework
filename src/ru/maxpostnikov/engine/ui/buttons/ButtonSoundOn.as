@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.ui.buttons 
 {
+	import flash.events.Event;
 	import ru.maxpostnikov.engine.Engine;
 	/**
 	 * ...
@@ -23,6 +24,21 @@ package ru.maxpostnikov.engine.ui.buttons
 			this.parent.addChild(_buttonSoundOff);
 			
 			super();
+		}
+		
+		override protected function onAddedToStage(e:Event):void 
+		{
+			super.onAddedToStage(e);
+			
+			if (_buttonSoundOff) {
+				if (Engine.getInstacne().isMuted) {
+					this.visible = false;
+					_buttonSoundOff.visible = true;
+				} else {
+					this.visible = true;
+					_buttonSoundOff.visible = false;
+				}
+			}
 		}
 		
 		override protected function click():void 

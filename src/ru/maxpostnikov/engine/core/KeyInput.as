@@ -23,7 +23,7 @@ package ru.maxpostnikov.engine.core
 		
 		private function onKeyDown(e:KeyboardEvent):void 
 		{
-			if (!Engine.getInstacne().isPaused) {
+			if (!Engine.getInstacne().isPaused && !Engine.getInstacne().isPausedLoop) {
 				if (e.keyCode == _KEY_R)
 					Engine.getInstacne().restartLevel();
 				

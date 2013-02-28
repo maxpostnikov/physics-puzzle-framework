@@ -1,6 +1,5 @@
 package ru.maxpostnikov.game 
 {
-	import ru.maxpostnikov.engine.ui.screens.*;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -8,7 +7,13 @@ package ru.maxpostnikov.game
 	public class GameData 
 	{
 		
-		public static const SCREENS:Vector.<Class> = new <Class>[ScreenBack, ScreenPause, ScreenMainMenu, ScreenLevelMap, ScreenReset, ScreenCredits];
+		public static const DEBUG:Boolean = true;
+		public static const LEVELS_TOTAL:int = 3;
+		public static const GAME_NAME:String = "Test";
+		
+		public static const SCORE_TIMER:Number = 1000;
+		public static const SCORE_INITIAL:Number = 500;
+		public static const SCORE_ON_TIMER:Number = -1;
 		
 		public static const URL_SPONSOR:String = "http://maxpostnikov.ru";
 		public static const URL_MORE_GAMES:String = "http://maxpostnikov.ru";

@@ -4,7 +4,10 @@ package ru.maxpostnikov.engine.core
 	import flash.display.MovieClip;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.Entity;
+	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
+	import ru.maxpostnikov.game.GameData;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
@@ -13,7 +16,7 @@ package ru.maxpostnikov.engine.core
 	public class Levels 
 	{
 		
-		private const _LEVEL_TOTAL:uint = 3;
+		private const _LEVEL_TOTAL:uint = GameData.LEVELS_TOTAL;
 		private const _LEVEL_PREFIX:String = "Level_";
 		
 		private var _timer:Timer;
@@ -34,6 +37,8 @@ package ru.maxpostnikov.engine.core
 			_data = new <LevelData>[];
 			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
 				_data.push(new LevelData());
+			
+			if (_level) removeLevel();
 		}
 		
 		public function save():Array 
@@ -79,21 +84,23 @@ package ru.maxpostnikov.engine.core
 				_timer.addEventListener(TimerEvent.TIMER, onTimer, false, 0, true);
 				_timer.start();
 			}
+			
+			Engine.getInstacne().showScreen(ScreenHUD.ID, { level:number, score:_data[_currentLevel - 1].score } );
 		}
 		
 		public function restartLevel():void 
 		{
-			addLevel(_currentLevel);
+			if (_level) addLevel(_currentLevel);
 		}
 		
 		public function nextLevel():void 
 		{
-			if (_currentLevel < _LEVEL_TOTAL) addLevel(_currentLevel + 1);
+			if (_level && _currentLevel < _LEVEL_TOTAL) addLevel(_currentLevel + 1);
 		}
 		
 		public function prevLevel():void 
 		{
-			if (_currentLevel > 1) addLevel(_currentLevel - 1);
+			if (_level && _currentLevel > 1) addLevel(_currentLevel - 1);
 		}
 		
 		private function removeLevel():void 
@@ -115,6 +122,8 @@ package ru.maxpostnikov.engine.core
 		private function onTimer(e:TimerEvent):void 
 		{
 			_data[_currentLevel - 1].step();
+			
+			Engine.getInstacne().updateScreen(ScreenHUD.ID, { score:_data[_currentLevel - 1].score } );
 		}
 		
 		public function get lastLevel():int 

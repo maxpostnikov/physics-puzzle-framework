@@ -24,8 +24,8 @@ package ru.maxpostnikov.engine
 		
 		public static const RATIO:Number = 30;
 		
-		private const _BORDER_WIDTH:Number = 0;
-		private const _BORDER_HEIGHT:Number = 0;
+		private const _BORDER_WIDTH:Number = 50;
+		private const _BORDER_HEIGHT:Number = 50;
 		
 		private var _loop:Loop;
 		private var _sounds:Sounds;
@@ -38,6 +38,7 @@ package ru.maxpostnikov.engine
 		private var _height:Number;
 		private var _isMuted:Boolean;
 		private var _isPaused:Boolean;
+		private var _isPausedLoop:Boolean;
 		private var _isDebuged:Boolean;
 		private var _isDebugAllowed:Boolean;
 		
@@ -109,14 +110,15 @@ package ru.maxpostnikov.engine
 		
 		public function openLevel(level:int):void 
 		{
+			if (_isPausedLoop) pauseLoop();
+			
 			_levels.addLevel(level);
 			save();
 		}
 		
 		public function openLastLevel():void 
 		{
-			_levels.addLevel(_levels.lastLevel);
-			save();
+			openLevel(_levels.lastLevel);
 		}
 		
 		public function openNextLevel():void 
@@ -148,29 +150,46 @@ package ru.maxpostnikov.engine
 		
 		public function reset():void 
 		{
+			if (_isPausedLoop) pauseLoop();
+			
 			_levels.resetLevels();
 			_canvas.updateScreen(ScreenMainMenu.ID, { isResumed:false } );
 			save();
 		}
 		
+		public function pauseLoop():void 
+		{
+			if (_isPausedLoop) {
+				_loop.start();
+				_isPausedLoop = false;
+			} else {
+				_loop.stop();
+				_isPausedLoop = true;
+			}
+			
+			_levels.pause();
+		}
+		
 		public function pause():void 
 		{
 			if (_isPaused) {
-				_loop.start();
 				_canvas.hideScreen(ScreenPause.ID);
 				if (!_isMuted) 
 					_sounds.mute(false);
+				if (!_isPausedLoop)
+					_loop.start();
 				
 				_isPaused = false;
 			} else {
-				_loop.stop();
-				_sounds.mute(true);
 				_canvas.showScreen(ScreenPause.ID);
+				_sounds.mute(true);
+				if (!_isPausedLoop)
+					_loop.stop();
 				
 				_isPaused = true;
 			}
 			
-			_levels.pause();
+			if (!_isPausedLoop) _levels.pause();
 		}
 		
 		public function debug():void 
@@ -214,11 +233,13 @@ package ru.maxpostnikov.engine
 		
 		public function get height():Number { return _height; }
 		
+		public function get isMuted():Boolean { return _isMuted; }
+		
 		public function get isPaused():Boolean { return _isPaused; }
 		
-		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
+		public function get isPausedLoop():Boolean { return _isPausedLoop; }
 		
-		public function get totalLevels():int { return _levels.data.length; } 
+		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
 		
 	}
 
