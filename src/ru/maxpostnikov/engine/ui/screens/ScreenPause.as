@@ -9,7 +9,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenPause extends Screen
 	{
 		
-		public static const ID:uint = 2;
+		public static const ID:String = "Pause";
 		
 		public function ScreenPause() 
 		{
@@ -33,7 +33,7 @@ package ru.maxpostnikov.engine.ui.screens
 			Engine.getInstacne().pause();
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

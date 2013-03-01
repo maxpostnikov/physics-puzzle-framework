@@ -14,17 +14,18 @@ package ru.maxpostnikov.engine.entities
 	{
 		
 		private var _isRemoved:Boolean;
-		private var _components:Vector.<Component>;
+		
+		protected var components:Vector.<Component>;
 		
 		public function Entity()
 		{
-			_components = new <Component>[];
+			components = new <Component>[];
 			
 			for (var i:int = 0; i < numChildren; i++) {
 				var child:DisplayObject = getChildAt(i);
 				
 				if (child is Component)
-					_components.push(child as Component);
+					components.push(child as Component);
 			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
@@ -34,7 +35,7 @@ package ru.maxpostnikov.engine.entities
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
-			for each (var component:Component in _components)
+			for each (var component:Component in components)
 				component.add();
 			
 			Engine.getInstacne().process(this);
@@ -42,20 +43,20 @@ package ru.maxpostnikov.engine.entities
 		
 		public function remove():void 
 		{
-			for (var i:int = _components.length - 1; i >= 0; i--)
-				removeComponent(_components[i]);
+			for (var i:int = components.length - 1; i >= 0; i--)
+				removeComponent(components[i]);
 			
 			this.parent.removeChild(this);
 			
 			_isRemoved = true;
 			Engine.getInstacne().process(this);
 			
-			_components = null;
+			components = null;
 		}
 		
 		public function update():void 
 		{
-			for each (var component:Component in _components) {
+			for each (var component:Component in components) {
 				component.synchronize();
 				
 				if (component.isOutsideBorder()) removeComponent(component, true);
@@ -69,11 +70,11 @@ package ru.maxpostnikov.engine.entities
 		
 		private function removeComponent(component:Component, full:Boolean = false):void 
 		{
-			_components.splice(_components.indexOf(component), 1);
+			components.splice(components.indexOf(component), 1);
 			
 			component.remove();
 			
-			if (full && _components.length == 0) remove();
+			if (full && components.length == 0) remove();
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }

@@ -7,7 +7,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenHUD extends Screen
 	{
 		
-		public static const ID:uint = 7;
+		public static const ID:String = "HUD";
 		
 		public function ScreenHUD() 
 		{
@@ -31,7 +31,7 @@ package ru.maxpostnikov.engine.ui.screens
 			}
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

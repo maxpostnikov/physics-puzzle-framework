@@ -12,7 +12,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenLevelMap extends Screen
 	{
 		
-		public static const ID:uint = 4;
+		public static const ID:String = "LevelMap";
 		
 		private static const _BUTTON_OFFSET:int = 10;
 		
@@ -79,7 +79,7 @@ package ru.maxpostnikov.engine.ui.screens
 			}
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

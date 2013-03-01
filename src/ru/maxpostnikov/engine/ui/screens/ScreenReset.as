@@ -7,7 +7,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenReset extends Screen
 	{
 		
-		public static const ID:uint = 6;
+		public static const ID:String = "Reset";
 		
 		public function ScreenReset() 
 		{
@@ -16,7 +16,7 @@ package ru.maxpostnikov.engine.ui.screens
 			super();
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

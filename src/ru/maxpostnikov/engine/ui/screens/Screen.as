@@ -30,7 +30,7 @@ package ru.maxpostnikov.engine.ui.screens
 			
 		}
 		
-		public function getID():uint { throw Error("Override Screen -> getID"); }
+		public function getID():String { throw Error("Override Screen -> getID"); }
 		
 	}
 

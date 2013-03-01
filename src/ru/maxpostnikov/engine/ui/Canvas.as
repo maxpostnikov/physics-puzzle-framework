@@ -25,7 +25,7 @@ package ru.maxpostnikov.engine.ui
 			}
 		}
 		
-		public function showScreen(id:uint, data:Object = null):void 
+		public function showScreen(id:String, data:Object = null):void 
 		{
 			var screen:Screen = _screens[id];
 			
@@ -35,7 +35,7 @@ package ru.maxpostnikov.engine.ui
 			}
 		}
 		
-		public function updateScreen(id:uint, data:Object):void 
+		public function updateScreen(id:String, data:Object):void 
 		{
 			var screen:Screen = _screens[id];
 			
@@ -43,7 +43,7 @@ package ru.maxpostnikov.engine.ui
 				screen.update(data);
 		}
 		
-		public function hideScreen(id:uint):void 
+		public function hideScreen(id:String):void 
 		{
 			var screen:Screen = _screens[id];
 			

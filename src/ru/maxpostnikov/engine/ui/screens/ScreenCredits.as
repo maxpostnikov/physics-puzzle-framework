@@ -7,7 +7,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenCredits extends Screen
 	{
 		
-		public static const ID:uint = 5;
+		public static const ID:String = "Credits";
 		
 		public function ScreenCredits() 
 		{
@@ -16,7 +16,7 @@ package ru.maxpostnikov.engine.ui.screens
 			super();
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

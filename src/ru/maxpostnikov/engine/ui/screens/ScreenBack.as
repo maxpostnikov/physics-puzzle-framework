@@ -7,7 +7,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenBack extends Screen
 	{
 		
-		public static const ID:uint = 1;
+		public static const ID:String = "Back";
 		
 		public function ScreenBack() 
 		{
@@ -16,7 +16,7 @@ package ru.maxpostnikov.engine.ui.screens
 			super();
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 	}
 

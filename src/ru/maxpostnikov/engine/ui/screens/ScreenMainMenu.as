@@ -10,7 +10,7 @@ package ru.maxpostnikov.engine.ui.screens
 	public class ScreenMainMenu extends Screen
 	{
 		
-		public static const ID:uint = 3;
+		public static const ID:String = "MainMenu";
 		
 		private var _isResumed:Boolean;
 		private var _buttonPlay:ButtonPlay;
@@ -66,7 +66,7 @@ package ru.maxpostnikov.engine.ui.screens
 			}
 		}
 		
-		override public function getID():uint { return ID; }
+		override public function getID():String { return ID; }
 		
 		public function get isResumed():Boolean { return _isResumed; }
 		

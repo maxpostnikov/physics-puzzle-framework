@@ -87,7 +87,7 @@ package ru.maxpostnikov.engine
 			_sounds.stop(sound);
 		}
 		
-		public function showScreen(id:uint, data:Object = null):void 
+		public function showScreen(id:String, data:Object = null):void 
 		{
 			if (id == ScreenMainMenu.ID) {
 				_canvas.showScreen(ScreenBack.ID);
@@ -98,12 +98,12 @@ package ru.maxpostnikov.engine
 			_canvas.showScreen(id, data);
 		}
 		
-		public function updateScreen(id:uint, data:Object):void 
+		public function updateScreen(id:String, data:Object):void 
 		{
 			_canvas.updateScreen(id, data);
 		}
 		
-		public function hideScreen(id:uint):void 
+		public function hideScreen(id:String):void 
 		{
 			_canvas.hideScreen(id);
 		}
