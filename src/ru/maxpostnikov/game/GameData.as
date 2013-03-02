@@ -11,7 +11,7 @@ package ru.maxpostnikov.game
 		public static const LEVELS_TOTAL:int = 3;
 		public static const GAME_NAME:String = "Test";
 		
-		public static const SCORE_TIMER:Number = 1000;
+		public static const SCORE_TIMER:Number = 100;
 		public static const SCORE_INITIAL:Number = 500;
 		public static const SCORE_ON_TIMER:Number = -1;
 		

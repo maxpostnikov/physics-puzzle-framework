@@ -1,6 +1,9 @@
 package ru.maxpostnikov.utilities 
 {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
@@ -29,6 +32,24 @@ package ru.maxpostnikov.utilities
 		public static function angleInRadians(angle:Number):Number 
 		{
 			return angle * Math.PI / 180;
+		}
+		
+		public static function rotateInsideOut(container:DisplayObjectContainer):void 
+		{
+			var rotation:Number = container.rotation;
+			var angle:Number = angleInRadians(rotation);
+			
+			for (var i:int = 0; i < container.numChildren; i++) {
+				var child:DisplayObject = container.getChildAt(i);
+				var position:Point = new Point((Math.cos(angle) * child.x) - (Math.sin(angle) * child.y),
+											   (Math.sin(angle) * child.x) + (Math.cos(angle) * child.y));
+				
+				child.x = position.x;
+				child.y = position.y;
+				child.rotation += rotation;
+			}
+			
+			container.rotation = 0;
 		}
 		
 		public static function realSize(mc:MovieClip):Rectangle 

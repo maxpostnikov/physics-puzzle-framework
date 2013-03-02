@@ -30,7 +30,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Engine.getInstacne().launch(this, GameData.GAME_NAME, GameData.DEBUG);
-			Engine.getInstacne().playSound(GameContent.music);
+			//Engine.getInstacne().playSound(GameContent.music);
 			Engine.getInstacne().showScreen(ScreenMainMenu.ID);
 		}
 		

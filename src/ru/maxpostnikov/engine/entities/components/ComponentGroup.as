@@ -32,7 +32,7 @@ package ru.maxpostnikov.engine.entities.components
 		
 		override public function add():void 
 		{
-			rotateInsideOut();
+			Utils.rotateInsideOut(this);
 			
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
@@ -45,25 +45,6 @@ package ru.maxpostnikov.engine.entities.components
 			super.remove();
 			
 			_group = null;
-		}
-		
-		private function rotateInsideOut():void 
-		{
-			var rotation:Number = this.rotation + this.parent.rotation;
-			var angle:Number = Utils.angleInRadians(rotation);
-			
-			for (var i:int = 0; i < numChildren; i++) {
-				var child:DisplayObject = getChildAt(i);
-				var position:Point = new Point((Math.cos(angle) * child.x) - (Math.sin(angle) * child.y),
-											   (Math.sin(angle) * child.x) + (Math.cos(angle) * child.y));
-				
-				child.x = position.x;
-				child.y = position.y;
-				child.rotation += rotation;
-			}
-			
-			this.rotation = 0;
-			this.parent.rotation = 0;
 		}
 		
 		private function createBodyDef():b2BodyDef 

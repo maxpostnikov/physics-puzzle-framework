@@ -28,7 +28,7 @@ package ru.maxpostnikov.game.entities
 		
 		private function rotateToCursor():void 
 		{
-			var angle:Number = Utils.angleInDegrees(Math.atan2(this.mouseY, this.mouseX)) - this.rotation;
+			var angle:Number = Utils.angleInDegrees(Math.atan2(this.mouseY, this.mouseX)) - this.initialRotation;
 			
 			if (angle > 90)
 				angle -= 360;

@@ -6,6 +6,7 @@ package ru.maxpostnikov.engine.entities
 	import flash.events.Event;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
+	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -15,10 +16,13 @@ package ru.maxpostnikov.engine.entities
 		
 		private var _isRemoved:Boolean;
 		
+		protected var initialRotation:Number;
 		protected var components:Vector.<Component>;
 		
 		public function Entity()
 		{
+			initialRotation = this.rotation;
+			
 			components = new <Component>[];
 			
 			for (var i:int = 0; i < numChildren; i++) {
@@ -34,6 +38,8 @@ package ru.maxpostnikov.engine.entities
 		private function onAddedToStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			Utils.rotateInsideOut(this);
 			
 			for each (var component:Component in components)
 				component.add();
