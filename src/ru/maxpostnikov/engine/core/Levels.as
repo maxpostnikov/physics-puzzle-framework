@@ -8,6 +8,7 @@ package ru.maxpostnikov.engine.core
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
 	import ru.maxpostnikov.game.GameData;
+	import ru.maxpostnikov.game.GameLogic;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
@@ -117,6 +118,8 @@ package ru.maxpostnikov.engine.core
 				_timer.stop();
 				_timer = null;
 			}
+			
+			GameLogic.reset();
 		}
 		
 		private function onTimer(e:TimerEvent):void 
@@ -133,6 +136,8 @@ package ru.maxpostnikov.engine.core
 			
 			return 1;
 		}
+		
+		public function get level():MovieClip { return _level; }
 		
 		public function get data():Vector.<LevelData> { return _data; }
 		

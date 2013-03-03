@@ -77,6 +77,19 @@ package ru.maxpostnikov.engine
 			if (_loop.queue.indexOf(object) < 0) _loop.queue.push(object);
 		}
 		
+		public function removeFirstEntityOfType(type:Class):void 
+		{
+			var length:int = _levels.level.numChildren;
+			for (var i:int = 0; i < length; i++) {
+				var entity:IProcessable = _levels.level.getChildAt(i) as IProcessable;
+				
+				if (entity is type) {
+					entity.remove();
+					break;
+				}
+			}
+		}
+		
 		public function playSound(sound:Sound, loops:int = int.MAX_VALUE):void 
 		{
 			_sounds.play(sound, loops);

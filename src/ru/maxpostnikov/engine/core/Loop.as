@@ -8,6 +8,7 @@ package ru.maxpostnikov.engine.core
 	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.entities.IProcessable;
+	import ru.maxpostnikov.game.GameLogic;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -54,6 +55,8 @@ package ru.maxpostnikov.engine.core
 			_physics.step();
 			
 			update();
+			
+			GameLogic.onLoopStep();
 		}
 		
 		private function update():void 
@@ -69,10 +72,15 @@ package ru.maxpostnikov.engine.core
 		{
 			for each (var object:IProcessable in queue) {
 				if (object is Entity) {
-					if (object.isRemoved)
+					if (object.isRemoved) {
 						_entities.splice(_entities.indexOf(object as Entity), 1);
-					else
+						
+						GameLogic.onEntityRemoved(object as Entity);
+					} else {
 						_entities.push(object as Entity);
+						
+						GameLogic.onEntityAdded(object as Entity);
+					}
 				} else if (object is Component) {
 					if (object is ComponentJoint) {
 						if (!object.isRemoved)

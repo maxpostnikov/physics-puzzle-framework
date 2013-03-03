@@ -6,6 +6,7 @@ package ru.maxpostnikov.engine.entities
 	import flash.events.Event;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
+	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
 	 * ...
@@ -15,21 +16,21 @@ package ru.maxpostnikov.engine.entities
 	{
 		
 		private var _isRemoved:Boolean;
+		private var _components:Vector.<Component>;
 		
 		protected var initialRotation:Number;
-		protected var components:Vector.<Component>;
 		
 		public function Entity()
 		{
 			initialRotation = this.rotation;
 			
-			components = new <Component>[];
+			_components = new <Component>[];
 			
 			for (var i:int = 0; i < numChildren; i++) {
 				var child:DisplayObject = getChildAt(i);
 				
 				if (child is Component)
-					components.push(child as Component);
+					_components.push(child as Component);
 			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
@@ -41,7 +42,7 @@ package ru.maxpostnikov.engine.entities
 			
 			Utils.rotateInsideOut(this);
 			
-			for each (var component:Component in components)
+			for each (var component:Component in _components)
 				component.add();
 			
 			Engine.getInstacne().process(this);
@@ -49,20 +50,20 @@ package ru.maxpostnikov.engine.entities
 		
 		public function remove():void 
 		{
-			for (var i:int = components.length - 1; i >= 0; i--)
-				removeComponent(components[i]);
+			for (var i:int = _components.length - 1; i >= 0; i--)
+				removeComponent(_components[i]);
 			
 			this.parent.removeChild(this);
 			
 			_isRemoved = true;
 			Engine.getInstacne().process(this);
 			
-			components = null;
+			_components = null;
 		}
 		
 		public function update():void 
 		{
-			for each (var component:Component in components) {
+			for each (var component:Component in _components) {
 				component.synchronize();
 				
 				if (component.isOutsideBorder()) removeComponent(component, true);
@@ -76,14 +77,36 @@ package ru.maxpostnikov.engine.entities
 		
 		private function removeComponent(component:Component, full:Boolean = false):void 
 		{
-			components.splice(components.indexOf(component), 1);
+			_components.splice(_components.indexOf(component), 1);
 			
 			component.remove();
 			
-			if (full && components.length == 0) remove();
+			if (full && isAllBodiesRemoved) remove();
+		}
+		
+		private function get isAllBodiesRemoved():Boolean 
+		{
+			for each (var component:Component in _components) {
+				if (!(component is ComponentJoint) && component.body != null)
+					return false;
+			}
+			
+			return true;
+		}
+		
+		public function get isAllBodiesCreated():Boolean 
+		{
+			for each (var component:Component in _components) {
+				if (!(component is ComponentJoint) && component.body == null)
+					return false;
+			}
+			
+			return true;
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }
+		
+		public function get components():Vector.<Component> { return _components; }
 		
 	}
 
