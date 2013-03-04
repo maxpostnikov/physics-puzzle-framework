@@ -5,7 +5,7 @@ package ru.maxpostnikov.game.entities
 	import ru.maxpostnikov.engine.entities.Entity;
 	/**
 	 * ...
-	 * @author ...
+	 * @author Max stagefear Postnikov
 	 */
 	public class EntityProjectile extends Entity
 	{

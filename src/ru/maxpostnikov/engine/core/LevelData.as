@@ -21,6 +21,8 @@ package ru.maxpostnikov.engine.core
 		
 		public function LevelData() 
 		{
+			_score = 0;
+			_highscore = 0;
 			_isClosed = true;
 		}
 		
@@ -42,6 +44,8 @@ package ru.maxpostnikov.engine.core
 		
 		public function passed():void 
 		{
+			if (_score > _highscore) _highscore = _score;
+			
 			_isPassed = true;
 		}
 		
@@ -62,6 +66,8 @@ package ru.maxpostnikov.engine.core
 		public function get score():Number { return _score; }
 		
 		public function get isClosed():Boolean { return _isClosed; }
+		
+		public function get highscore():Number { return _highscore; }
 		
 	}
 

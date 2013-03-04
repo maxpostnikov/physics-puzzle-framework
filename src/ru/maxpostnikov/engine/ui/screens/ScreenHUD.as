@@ -13,6 +13,11 @@ package ru.maxpostnikov.engine.ui.screens
 		{
 			visual = new sHUD();
 			
+			this.mouseEnabled = false;
+			visual.mouseEnabled = false;
+			visual.mcLevelData.mouseEnabled = false;
+			visual.mcLevelData.mouseChildren = false;
+			
 			super();
 		}
 		

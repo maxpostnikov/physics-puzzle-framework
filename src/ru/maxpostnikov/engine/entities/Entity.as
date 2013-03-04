@@ -75,13 +75,26 @@ package ru.maxpostnikov.engine.entities
 			//Override
 		}
 		
-		private function removeComponent(component:Component, full:Boolean = false):void 
+		public function pause():void 
+		{
+			//Override
+		}
+		
+		protected function onSelfRemoved():void 
+		{
+			//Override
+		}
+		
+		private function removeComponent(component:Component, isSelfRemoved:Boolean = false):void 
 		{
 			_components.splice(_components.indexOf(component), 1);
 			
 			component.remove();
 			
-			if (full && isAllBodiesRemoved) remove();
+			if (isSelfRemoved && isAllBodiesRemoved) {
+				remove();
+				onSelfRemoved();
+			}
 		}
 		
 		private function get isAllBodiesRemoved():Boolean 

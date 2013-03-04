@@ -66,6 +66,11 @@ package ru.maxpostnikov.engine.core
 				else
 					_timer.start();
 			}
+			
+			if (_level) {
+				for (var i:int = 0; i < _level.numChildren; i++)
+					(_level.getChildAt(i) as Entity).pause();
+			}
 		}
 		
 		public function addLevel(number:int):void 
@@ -135,6 +140,16 @@ package ru.maxpostnikov.engine.core
 				if (!_data[i].isClosed) return i + 1;
 			
 			return 1;
+		}
+		
+		public function get totalScore():Number 
+		{
+			var totalScore:Number = 0;
+			
+			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
+				totalScore += _data[i].score;
+			
+			return totalScore;
 		}
 		
 		public function get level():MovieClip { return _level; }

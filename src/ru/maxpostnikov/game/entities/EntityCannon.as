@@ -34,12 +34,12 @@ package ru.maxpostnikov.game.entities
 			if ((this as MovieClip).barrel && (this as MovieClip).barrel.visual)
 				_barrel = (this as MovieClip).barrel.visual;
 			
-			this.parent.addEventListener(MouseEvent.CLICK, onLevelClick, false, 0, true);
+			this.parent.addEventListener(MouseEvent.MOUSE_DOWN, onLevelClick, false, 0, true);
 		}
 		
 		override public function remove():void 
 		{
-			this.parent.removeEventListener(MouseEvent.CLICK, onLevelClick);
+			this.parent.removeEventListener(MouseEvent.MOUSE_DOWN, onLevelClick);
 			
 			_joint = null;
 			_barrel = null;

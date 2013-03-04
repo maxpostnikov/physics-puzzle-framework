@@ -13,6 +13,8 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.ui.Canvas;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
+	import ru.maxpostnikov.engine.ui.screens.ScreenFail;
+	import ru.maxpostnikov.engine.ui.screens.ScreenInterlevel;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
 	import ru.maxpostnikov.engine.ui.screens.ScreenPause;
 	/**
@@ -159,6 +161,17 @@ package ru.maxpostnikov.engine
 		{
 			_levels.currentLevelData.passed();
 			save();
+			
+			pauseLoop();
+			showScreen(ScreenInterlevel.ID, { score:_levels.currentLevelData.score, 
+											  highscore:_levels.currentLevelData.highscore, 
+											  totalScore:_levels.totalScore } );
+		}
+		
+		public function fail():void 
+		{
+			pauseLoop();
+			showScreen(ScreenFail.ID);
 		}
 		
 		public function reset():void 

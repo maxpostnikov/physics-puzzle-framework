@@ -6,7 +6,7 @@ package ru.maxpostnikov.game
 	import ru.maxpostnikov.game.entities.EntityTarget;
 	/**
 	 * ...
-	 * @author ...
+	 * @author Max stagefear Postnikov
 	 */
 	public class GameLogic 
 	{
@@ -48,8 +48,8 @@ package ru.maxpostnikov.game
 		public static function onLoopStep():void 
 		{
 			if (_targetsTotal == _targetsCollected && _targetsCollected != 0) {
-				trace("win");
-				//Engine.getInstacne().win();
+				trace("WINNING HERE!!");
+				Engine.getInstacne().win();
 			}
 		}
 		

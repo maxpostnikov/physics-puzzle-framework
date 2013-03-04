@@ -9,7 +9,8 @@ package ru.maxpostnikov.game
 	public class GameContent 
 	{
 		
-		public static const SCREENS:Vector.<Class> = new <Class>[ScreenBack, ScreenPause, ScreenMainMenu, ScreenLevelMap, ScreenReset, ScreenCredits, ScreenHUD];
+		public static const SCREENS:Vector.<Class> = new <Class>[ScreenBack, ScreenPause, ScreenMainMenu, ScreenLevelMap, ScreenReset, 
+																 ScreenCredits, ScreenHUD, ScreenFail, ScreenInterlevel];
 		
 		/*[Embed(source='/../../ThermoBox 2/Sounds/Cattails.mp3')]
 		private static var _music:Class;

@@ -34,6 +34,7 @@ package ru.maxpostnikov.engine.core
 		
 		private var _world:b2World;
 		private var _jointBodies:Vector.<b2Body>;
+		private var _jointComponent:ComponentJoint;
 		
 		public function Physics(ratio:Number, contactListener:b2ContactListener, debugSprite:Sprite = null) 
 		{
@@ -73,7 +74,10 @@ package ru.maxpostnikov.engine.core
 		
 		public function addJoint(component:ComponentJoint):void 
 		{
-			queryPoints(component.anchorPoints);
+			queryPoints(component.anchorPoints, component);
+			
+			if (_jointBodies.length == 0)
+				queryPoints(component.anchorPoints);
 			
 			if (_jointBodies.length > 0) {
 				if (_jointBodies.length == 1) _jointBodies.push(_world.GetGroundBody());
@@ -82,8 +86,9 @@ package ru.maxpostnikov.engine.core
 			}
 		}
 		
-		private function queryPoints(points:Vector.<Point>):void 
+		private function queryPoints(points:Vector.<Point>, component:ComponentJoint = null):void 
 		{
+			_jointComponent = component;
 			_jointBodies = new <b2Body>[];
 			
 			for each (var point:Point in points)
@@ -92,7 +97,10 @@ package ru.maxpostnikov.engine.core
 		
 		private function queryPointsCallback(fixture:b2Fixture):Boolean 
 		{
-			_jointBodies.push(fixture.GetBody());
+			var body:b2Body = fixture.GetBody();
+			
+			if ((!_jointComponent || (_jointComponent && _jointComponent.parent == (body.GetUserData() as Component).parent)) && _jointBodies.indexOf(body) < 0)
+				_jointBodies.push(body);
 			
 			return true;
 		}

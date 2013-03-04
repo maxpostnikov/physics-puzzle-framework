@@ -10,6 +10,7 @@ package ru.maxpostnikov.engine.ui.buttons
 		
 		override protected function click():void 
 		{
+			Engine.getInstacne().pauseLoop();
 			Engine.getInstacne().openNextLevel();
 			
 			super.click();
