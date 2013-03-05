@@ -11,20 +11,35 @@ package ru.maxpostnikov.game
 	public class GameLogic 
 	{
 		
-		private static const _PROJECTILES_TOTAL:int = 1;
+		private const _PROJECTILES_TOTAL:int = 1;
 		
-		private static var _targetsTotal:int;
-		private static var _targetsCollected:int;
-		private static var _projectilesCreated:int;
+		private var _isWinning:Boolean;
+		private var _targetsTotal:int;
+		private var _targetsCollected:int;
+		private var _projectilesCreated:int;
 		
-		public static function reset():void 
+		private static var _instance:GameLogic;
+		
+		public function GameLogic(singleton:PrivateClass) 
 		{
+			_instance = this;
+		}
+		
+		public static function getInstacne():GameLogic 
+		{
+			return (_instance) ? _instance : new GameLogic(new PrivateClass());
+		}
+		
+		public function init():void 
+		{
+			_isWinning = false;
+			
 			_targetsTotal = 0;
 			_targetsCollected = 0;
 			_projectilesCreated = 0;
 		}
 		
-		public static function onEntityAdded(entity:Entity):void 
+		public function onEntityAdded(entity:Entity):void 
 		{
 			if (entity is EntityTarget)
 				_targetsTotal++;
@@ -35,9 +50,9 @@ package ru.maxpostnikov.game
 				Engine.getInstacne().removeFirstEntityOfType(EntityProjectile);
 		}
 		
-		public static function onEntityRemoved(entity:Entity):void 
+		public function onEntityRemoved(entity:Entity):void 
 		{
-			if (entity is EntityTarget)
+			if (entity is EntityTarget && (entity as EntityTarget).isCollected)
 				_targetsCollected++;
 			else if (entity is EntityProjectile)
 				_projectilesCreated--;
@@ -45,10 +60,11 @@ package ru.maxpostnikov.game
 			if (_projectilesCreated < 0) _projectilesCreated = 0;
 		}
 		
-		public static function onLoopStep():void 
+		public function onLoopStep():void 
 		{
-			if (_targetsTotal == _targetsCollected && _targetsCollected != 0) {
-				trace("WINNING HERE!!");
+			if (!_isWinning && _targetsTotal != 0 && _targetsTotal == _targetsCollected) {
+				_isWinning = true;
+				
 				Engine.getInstacne().win();
 			}
 		}
@@ -56,3 +72,5 @@ package ru.maxpostnikov.game
 	}
 
 }
+
+class PrivateClass { }

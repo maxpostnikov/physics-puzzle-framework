@@ -67,6 +67,8 @@ package ru.maxpostnikov.engine.core
 		
 		public function get isClosed():Boolean { return _isClosed; }
 		
+		public function get isPassed():Boolean { return _isPassed; }
+		
 		public function get highscore():Number { return _highscore; }
 		
 	}

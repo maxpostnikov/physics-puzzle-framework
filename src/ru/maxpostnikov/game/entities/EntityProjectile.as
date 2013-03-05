@@ -12,8 +12,10 @@ package ru.maxpostnikov.game.entities
 		
 		override public function contact(type:String, fixture:b2Fixture, entity:Entity, impulse:Number):void 
 		{
-			if (type == ContactListener.BEGIN_CONTACT && entity is EntityTarget)
+			if (type == ContactListener.BEGIN_CONTACT && entity is EntityTarget) {
 				entity.remove();
+				(entity as EntityTarget).isCollected = true;
+			}
 		}
 		
 	}

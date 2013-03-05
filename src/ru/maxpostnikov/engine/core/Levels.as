@@ -40,6 +40,8 @@ package ru.maxpostnikov.engine.core
 				_data.push(new LevelData());
 			
 			if (_level) removeLevel();
+			
+			_currentLevel = 0;
 		}
 		
 		public function save():Array 
@@ -75,6 +77,8 @@ package ru.maxpostnikov.engine.core
 		
 		public function addLevel(number:int):void 
 		{
+			GameLogic.getInstacne().init();
+			
 			_currentLevel = number;
 			
 			if (_level) removeLevel();
@@ -123,8 +127,6 @@ package ru.maxpostnikov.engine.core
 				_timer.stop();
 				_timer = null;
 			}
-			
-			GameLogic.reset();
 		}
 		
 		private function onTimer(e:TimerEvent):void 
@@ -146,10 +148,22 @@ package ru.maxpostnikov.engine.core
 		{
 			var totalScore:Number = 0;
 			
-			for (var i:int = 0; i < _LEVEL_TOTAL; i++)
-				totalScore += _data[i].score;
+			for (var i:int = 0; i < _LEVEL_TOTAL; i++) {
+				if (_data[i].isPassed)
+					totalScore += _data[i].score;
+			}
 			
 			return totalScore;
+		}
+		
+		public function get isAllLevelsCompleted():Boolean 
+		{
+			for (var i:int = 0; i < _LEVEL_TOTAL; i++) {
+				if (!_data[i].isPassed)
+					return false;
+			}
+			
+			return true;
 		}
 		
 		public function get level():MovieClip { return _level; }
@@ -157,6 +171,8 @@ package ru.maxpostnikov.engine.core
 		public function get data():Vector.<LevelData> { return _data; }
 		
 		public function get currentLevelData():LevelData { return _data[_currentLevel - 1]; }
+		
+		public function get isLevelLast():Boolean { return (_currentLevel == _LEVEL_TOTAL) ? true : false; }
 		
 	}
 

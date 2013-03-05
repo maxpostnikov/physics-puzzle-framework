@@ -56,7 +56,7 @@ package ru.maxpostnikov.engine.core
 			
 			update();
 			
-			GameLogic.onLoopStep();
+			GameLogic.getInstacne().onLoopStep();
 		}
 		
 		private function update():void 
@@ -75,11 +75,11 @@ package ru.maxpostnikov.engine.core
 					if (object.isRemoved) {
 						_entities.splice(_entities.indexOf(object as Entity), 1);
 						
-						GameLogic.onEntityRemoved(object as Entity);
+						GameLogic.getInstacne().onEntityRemoved(object as Entity);
 					} else {
 						_entities.push(object as Entity);
 						
-						GameLogic.onEntityAdded(object as Entity);
+						GameLogic.getInstacne().onEntityAdded(object as Entity);
 					}
 				} else if (object is Component) {
 					if (object is ComponentJoint) {

@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine.ui.buttons 
 {
 	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
 	/**
 	 * ...
@@ -11,8 +12,14 @@ package ru.maxpostnikov.engine.ui.buttons
 		
 		override protected function click():void 
 		{
-			Engine.getInstacne().pauseLoop();
-			Engine.getInstacne().showScreen(ScreenMainMenu.ID, { isResumed:true } );
+			var isResumed:Boolean;
+			
+			if (this.screen is ScreenHUD) {
+				isResumed = true;
+				Engine.getInstacne().pauseLoop();
+			}
+			
+			Engine.getInstacne().showScreen(ScreenMainMenu.ID, { isResumed:isResumed } );
 			
 			super.click();
 		}

@@ -9,6 +9,8 @@ package ru.maxpostnikov.game.entities
 	public class EntityTarget extends Entity
 	{
 		
+		public var isCollected:Boolean;
+		
 		override protected function onSelfRemoved():void 
 		{
 			Engine.getInstacne().fail();

@@ -14,9 +14,11 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
 	import ru.maxpostnikov.engine.ui.screens.ScreenFail;
+	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
 	import ru.maxpostnikov.engine.ui.screens.ScreenInterlevel;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
 	import ru.maxpostnikov.engine.ui.screens.ScreenPause;
+	import ru.maxpostnikov.engine.ui.screens.ScreenVictory;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -26,8 +28,8 @@ package ru.maxpostnikov.engine
 		
 		public static const RATIO:Number = 30;
 		
-		private const _BORDER_WIDTH:Number = 50;
-		private const _BORDER_HEIGHT:Number = 50;
+		private const _BORDER_WIDTH:Number = 150;
+		private const _BORDER_HEIGHT:Number = 150;
 		
 		private var _loop:Loop;
 		private var _sounds:Sounds;
@@ -58,6 +60,8 @@ package ru.maxpostnikov.engine
 		
 		public function launch(container:DisplayObjectContainer, cookieName:String, debug:Boolean = false):void 
 		{
+			addMask(container);
+			
 			_loop = new Loop(container, RATIO);
 			_sounds = new Sounds();
 			_cookie = new Cookie(cookieName);
@@ -104,10 +108,10 @@ package ru.maxpostnikov.engine
 		
 		public function showScreen(id:String, data:Object = null):void 
 		{
-			if (id == ScreenMainMenu.ID) {
+			if (id == ScreenMainMenu.ID || id == ScreenVictory.ID) {
 				_canvas.showScreen(ScreenBack.ID);
 				
-				if (_levels.lastLevel > 1) data = { isResumed:true };
+				if (_levels.lastLevel > 1 && !_levels.isAllLevelsCompleted) data = { isResumed:true };
 			}
 			
 			_canvas.showScreen(id, data);
@@ -138,7 +142,15 @@ package ru.maxpostnikov.engine
 		
 		public function openNextLevel():void 
 		{
-			_levels.nextLevel();
+			if (_levels.isLevelLast) {
+				if (!_isPausedLoop) pauseLoop();
+				
+				showScreen(ScreenVictory.ID, { totalScore:_levels.totalScore } );
+				hideScreen(ScreenHUD.ID);
+			} else {
+				_levels.nextLevel();
+			}
+			
 			save();
 		}
 		
@@ -253,6 +265,17 @@ package ru.maxpostnikov.engine
 		private function onDeactivate(e:Event):void 
 		{
 			if (!_isPaused) pause();
+		}
+		
+		private function addMask(container:DisplayObjectContainer):void 
+		{
+			var mask:Sprite = new Sprite();
+			mask.graphics.beginFill(0x000000, 0);
+			mask.graphics.drawRect(0, 0, container.stage.stageWidth, container.stage.stageHeight);
+			mask.graphics.endFill();
+			
+			container.addChild(mask);
+			container.mask = mask;
 		}
 		
 		public function get width():Number { return _width; }
