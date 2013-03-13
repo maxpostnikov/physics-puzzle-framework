@@ -14,7 +14,7 @@ package ru.maxpostnikov.engine.ui.buttons
 		{
 			if (Engine.getInstacne().isPausedLoop) {
 				Engine.getInstacne().pauseLoop();
-				Engine.getInstacne().showScreen(ScreenHUD.ID);
+				Engine.getInstacne().showScreen(ScreenHUD.ID, { isResumed:true } );
 			} else {
 				Engine.getInstacne().openLastLevel();
 			}

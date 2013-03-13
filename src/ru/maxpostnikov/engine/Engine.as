@@ -205,7 +205,7 @@ package ru.maxpostnikov.engine
 				_isPausedLoop = true;
 			}
 			
-			_levels.pause();
+			_levels.pause(_isPausedLoop);
 		}
 		
 		public function pause():void 
@@ -227,7 +227,7 @@ package ru.maxpostnikov.engine
 				_isPaused = true;
 			}
 			
-			if (!_isPausedLoop) _levels.pause();
+			if (!_isPausedLoop) _levels.pause(_isPaused);
 		}
 		
 		public function debug():void 

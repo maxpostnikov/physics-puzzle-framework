@@ -75,7 +75,7 @@ package ru.maxpostnikov.engine.entities
 			//Override
 		}
 		
-		public function pause():void 
+		public function pause(flag:Boolean):void 
 		{
 			//Override
 		}

@@ -60,7 +60,7 @@ package ru.maxpostnikov.engine.core
 				_data[i].load(data[i]);
 		}
 		
-		public function pause():void 
+		public function pause(flag:Boolean):void 
 		{
 			if (_timer) {
 				if (_timer.running)
@@ -71,7 +71,7 @@ package ru.maxpostnikov.engine.core
 			
 			if (_level) {
 				for (var i:int = 0; i < _level.numChildren; i++)
-					(_level.getChildAt(i) as Entity).pause();
+					(_level.getChildAt(i) as Entity).pause(flag);
 			}
 		}
 		

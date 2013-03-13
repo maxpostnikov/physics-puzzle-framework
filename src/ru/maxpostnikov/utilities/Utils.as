@@ -63,6 +63,28 @@ package ru.maxpostnikov.utilities
 			return size;
 		}
 		
+		public static function stopChildsOf(clip:MovieClip, self:Boolean = false):void 
+		{
+			if (self) clip.stop();
+			
+			for (var i:int = 0; i < clip.numChildren; i++) {
+				var child:DisplayObject = clip.getChildAt(i);
+				
+				if (child is MovieClip) stopChildsOf(child as MovieClip, true);
+			}
+		}
+		
+		public static function playChildsOf(clip:MovieClip, self:Boolean = true):void 
+		{
+			if (self) clip.play();
+			
+			for (var i:int = 0; i < clip.numChildren; i++) {
+				var child:DisplayObject = clip.getChildAt(i);
+				
+				if (child is MovieClip) playChildsOf(child as MovieClip, true);
+			}
+		}
+		
 		public static function getDefinition(name:String):Object 
 		{
 			var object:Object;
