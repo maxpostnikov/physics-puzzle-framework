@@ -24,7 +24,6 @@ package ru.maxpostnikov.game.entities
 		private const _PROJECTILE_SPEED_MIN:Number = 100;
 		private const _PROJECTILE_SPEED_MAX:Number = 600;
 		
-		private var _effect:MCEffect;
 		private var _barrel:MovieClip;
 		private var _joint:b2RevoluteJoint;
 		private var _projectile:EntityProjectile;
@@ -35,8 +34,6 @@ package ru.maxpostnikov.game.entities
 			
 			if ((this as MovieClip).barrel && (this as MovieClip).barrel.visual)
 				_barrel = (this as MovieClip).barrel.visual;
-			
-			_effect = new Effect_Bang();
 			
 			this.parent.addEventListener(MouseEvent.MOUSE_DOWN, onLevelClick, false, 0, true);
 		}
@@ -50,11 +47,6 @@ package ru.maxpostnikov.game.entities
 			_projectile = null;
 			
 			super.remove();
-		}
-		
-		override public function pause(flag:Boolean):void 
-		{
-			_effect.pause(flag);
 		}
 		
 		override public function update():void 
@@ -85,7 +77,8 @@ package ru.maxpostnikov.game.entities
 				
 				this.parent.addChild(_projectile);
 				
-				_effect.init(this, globalToLocal(new Point(position.x, position.y)));
+				var effect:MCEffect = new Effect_Bang();
+				effect.init(this, globalToLocal(new Point(position.x, position.y)));
 			}
 		}
 		

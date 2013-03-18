@@ -12,6 +12,10 @@ package ru.maxpostnikov.game
 		public static const SCREENS:Vector.<Class> = new <Class>[ScreenBack, ScreenPause, ScreenMainMenu, ScreenLevelMap, ScreenReset, 
 																 ScreenCredits, ScreenHUD, ScreenFail, ScreenInterlevel, ScreenVictory];
 		
+		public static const CURSORS:Vector.<Class> = new <Class>[Cursor_Arrow, Cursor_Cross];
+		public static const CURSOR_ARROW_ID:uint = 0;
+		public static const CURSOR_CROSS_ID:uint = 1;
+		
 		/*[Embed(source='/../../ThermoBox 2/Sounds/Cattails.mp3')]
 		private static var _music:Class;
 		

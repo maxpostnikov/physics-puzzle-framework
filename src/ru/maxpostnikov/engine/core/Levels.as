@@ -2,11 +2,13 @@ package ru.maxpostnikov.engine.core
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
+	import ru.maxpostnikov.game.GameContent;
 	import ru.maxpostnikov.game.GameData;
 	import ru.maxpostnikov.game.GameLogic;
 	import ru.maxpostnikov.utilities.Utils;
@@ -95,6 +97,11 @@ package ru.maxpostnikov.engine.core
 				_timer.start();
 			}
 			
+			//--- Cursor demo
+			_level.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut, false, 0, true);
+			_level.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver, false, 0, true);
+			//---
+			
 			Engine.getInstacne().showScreen(ScreenHUD.ID, { level:number, score:_data[_currentLevel - 1].score } );
 		}
 		
@@ -117,6 +124,11 @@ package ru.maxpostnikov.engine.core
 		{
 			_container.removeChild(_level);
 			
+			//--- Cursor demo
+			_level.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			_level.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			//---
+			
 			for (var i:int = _level.numChildren - 1; i >= 0; i--)
 				(_level.getChildAt(i) as Entity).remove();
 			
@@ -135,6 +147,18 @@ package ru.maxpostnikov.engine.core
 			
 			Engine.getInstacne().updateScreen(ScreenHUD.ID, { score:_data[_currentLevel - 1].score } );
 		}
+		
+		//--- Cursor demo
+		private function onMouseOver(e:MouseEvent):void 
+		{
+			Engine.getInstacne().showCursor(GameContent.CURSOR_CROSS_ID);
+		}
+		
+		private function onMouseOut(e:MouseEvent):void 
+		{
+			Engine.getInstacne().showCursor(GameContent.CURSOR_ARROW_ID);
+		}
+		//---
 		
 		public function get lastLevel():int 
 		{

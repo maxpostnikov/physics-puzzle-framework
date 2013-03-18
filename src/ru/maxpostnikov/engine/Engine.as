@@ -11,6 +11,7 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.core.Levels;
 	import ru.maxpostnikov.engine.core.Sounds;
 	import ru.maxpostnikov.engine.ui.Canvas;
+	import ru.maxpostnikov.engine.ui.Cursors;
 	import ru.maxpostnikov.engine.entities.IProcessable;
 	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
 	import ru.maxpostnikov.engine.ui.screens.ScreenFail;
@@ -36,6 +37,7 @@ package ru.maxpostnikov.engine
 		private var _cookie:Cookie;
 		private var _levels:Levels;
 		private var _canvas:Canvas;
+		private var _cursors:Cursors;
 		private var _keyInput:KeyInput;
 		
 		private var _width:Number;
@@ -67,6 +69,7 @@ package ru.maxpostnikov.engine
 			_cookie = new Cookie(cookieName);
 			_levels = new Levels(container);
 			_canvas = new Canvas(container);
+			_cursors = new Cursors(container.stage);
 			_keyInput = new KeyInput(container);
 			
 			load();
@@ -104,6 +107,11 @@ package ru.maxpostnikov.engine
 		public function stopSound(sound:Sound):void 
 		{
 			_sounds.stop(sound);
+		}
+		
+		public function showCursor(id:uint):void 
+		{
+			_cursors.showCursor(id);
 		}
 		
 		public function showScreen(id:String, data:Object = null):void 

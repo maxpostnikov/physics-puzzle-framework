@@ -4,6 +4,7 @@ package ru.maxpostnikov.engine.entities
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import ru.maxpostnikov.engine.effects.MCEffect;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
@@ -70,12 +71,18 @@ package ru.maxpostnikov.engine.entities
 			}
 		}
 		
-		public function contact(type:String, fixture:b2Fixture, entity:Entity, impulse:Number):void 
+		public function pause(flag:Boolean):void 
 		{
-			//Override
+			for (var i:int = 0; i < numChildren; i++) {
+				var child:DisplayObject = getChildAt(i);
+				
+				if (child is MCEffect) {
+					(child as MCEffect).pause(flag);
+				}
+			}
 		}
 		
-		public function pause(flag:Boolean):void 
+		public function contact(type:String, fixture:b2Fixture, entity:Entity, impulse:Number):void 
 		{
 			//Override
 		}

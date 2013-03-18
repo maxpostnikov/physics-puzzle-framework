@@ -32,6 +32,7 @@ package
 			Engine.getInstacne().launch(this, GameData.GAME_NAME, GameData.DEBUG);
 			//Engine.getInstacne().playSound(GameContent.music);
 			Engine.getInstacne().showScreen(ScreenMainMenu.ID);
+			Engine.getInstacne().showCursor(GameContent.CURSOR_ARROW_ID);
 		}
 		
 	}

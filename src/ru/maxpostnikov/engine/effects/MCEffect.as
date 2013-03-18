@@ -2,6 +2,7 @@ package ru.maxpostnikov.engine.effects
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import ru.maxpostnikov.utilities.Utils;
 	/**
@@ -16,22 +17,24 @@ package ru.maxpostnikov.engine.effects
 		
 		public function MCEffect() 
 		{
+			Utils.stopChildsOf(this, true);
+			
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
+			this.addFrameScript(this.totalFrames - 1, onLastFrame);
 			
-			Utils.stopChildsOf(this, true);
+			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true);
 		}
 		
 		public function init(container:DisplayObjectContainer, position:Point, callback:Function = null):void 
 		{
-			_callback = callback;
-			_container = container;
-			
+			this.gotoAndStop(1);
 			this.x = position.x;
 			this.y = position.y;
-			_container.addChild(this);
 			
-			this.addFrameScript(this.totalFrames - 1, onLastFrame);
+			_callback = callback;
+			_container = container;
+			_container.addChild(this);
 			
 			Utils.playChildsOf(this);
 		}
@@ -46,16 +49,18 @@ package ru.maxpostnikov.engine.effects
 		
 		private function onLastFrame():void 
 		{
-			if (_callback != null) _callback();
-			
-			remove();
-		}
-		
-		private function remove():void 
-		{
 			Utils.stopChildsOf(this, true);
 			
+			if (_callback != null) _callback();
+			
 			_container.removeChild(this);
+		}
+		
+		private function onRemovedFromStage(e:Event):void 
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			
+			Utils.stopChildsOf(this, true);
 			
 			_callback = null;
 			_container = null;
