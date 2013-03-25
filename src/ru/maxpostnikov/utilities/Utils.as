@@ -15,6 +15,10 @@ package ru.maxpostnikov.utilities
 	public class Utils 
 	{
 		
+		//0 - url, 1 - protocol, 2 - www. if exists, 3 - domain without www., 4 - query string after domain
+		public static const URL_PARSER:RegExp = /([\w]+):\/\/(www\.)?([\w-\.]+\.?\w+\.\w+)(.*)/i;
+		public static const URL_PROTOCOL:RegExp = /([\w]+):\/\//i;
+		
 		public static function randomNumber(min:Number, max:Number, round:Number = 1):Number 
 		{
 			var delta:Number = (max - min) + (1 * round);

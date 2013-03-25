@@ -1,7 +1,6 @@
 package 
 {
 	import flash.display.Sprite;
-	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.ui.screens.ScreenMainMenu;
@@ -12,6 +11,7 @@ package
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
+	[Frame(factoryClass="ru.maxpostnikov.Preloader")]
 	public class Main extends Sprite 
 	{
 		
@@ -26,8 +26,6 @@ package
 		private function init(e:Event = null):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			
-			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Engine.getInstacne().launch(this, GameData.GAME_NAME, GameData.DEBUG);
 			//Engine.getInstacne().playSound(GameContent.music);
