@@ -6,12 +6,10 @@ package ru.maxpostnikov.engine.core
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.engine.EngineEvent;
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
-	import ru.maxpostnikov.game.GameContent;
-	import ru.maxpostnikov.game.GameData;
-	import ru.maxpostnikov.game.GameLogic;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -19,7 +17,7 @@ package ru.maxpostnikov.engine.core
 	public class Levels 
 	{
 		
-		private const _LEVEL_TOTAL:uint = GameData.LEVELS_TOTAL;
+		private const _LEVEL_TOTAL:uint = Engine.getInstacne().data.levelsTotal;
 		private const _LEVEL_PREFIX:String = "Level_";
 		
 		private var _timer:Timer;
@@ -79,7 +77,7 @@ package ru.maxpostnikov.engine.core
 		
 		public function addLevel(number:int):void 
 		{
-			GameLogic.getInstacne().init();
+			Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.LEVEL_ADDED));
 			
 			_currentLevel = number;
 			
@@ -97,10 +95,8 @@ package ru.maxpostnikov.engine.core
 				_timer.start();
 			}
 			
-			//--- Cursor demo
 			_level.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut, false, 0, true);
 			_level.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver, false, 0, true);
-			//---
 			
 			Engine.getInstacne().showScreen(ScreenHUD.ID, { level:number, score:_data[_currentLevel - 1].score } );
 		}
@@ -124,10 +120,8 @@ package ru.maxpostnikov.engine.core
 		{
 			_container.removeChild(_level);
 			
-			//--- Cursor demo
 			_level.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			_level.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			//---
 			
 			for (var i:int = _level.numChildren - 1; i >= 0; i--)
 				(_level.getChildAt(i) as Entity).remove();
@@ -148,17 +142,15 @@ package ru.maxpostnikov.engine.core
 			Engine.getInstacne().updateScreen(ScreenHUD.ID, { score:_data[_currentLevel - 1].score } );
 		}
 		
-		//--- Cursor demo
 		private function onMouseOver(e:MouseEvent):void 
 		{
-			Engine.getInstacne().showCursor(GameContent.CURSOR_CROSS_ID);
+			Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.LEVEL_MOUSE_OVER, e));
 		}
 		
 		private function onMouseOut(e:MouseEvent):void 
 		{
-			Engine.getInstacne().showCursor(GameContent.CURSOR_ARROW_ID);
+			Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.LEVEL_MOUSE_OUT, e));
 		}
-		//---
 		
 		public function get lastLevel():int 
 		{

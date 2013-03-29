@@ -4,7 +4,6 @@ package ru.maxpostnikov.engine.ui.screens
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.ui.buttons.ButtonLevel;
-	import ru.maxpostnikov.game.GameData;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -18,13 +17,11 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		private var _buttonsLevel:Vector.<ButtonLevel>;
 		
-		public function ScreenLevelMap() 
+		public function ScreenLevelMap(visual:MovieClip, buttonLevelClass:Class) 
 		{
-			visual = new sLevelMap();
+			super(visual);
 			
-			createButtonsLevel();
-			
-			super();
+			createButtonsLevel(buttonLevelClass);
 		}
 		
 		override public function show(data:Object = null):void 
@@ -32,14 +29,14 @@ package ru.maxpostnikov.engine.ui.screens
 			setButtonsState();
 		}
 		
-		private function createButtonsLevel():void 
+		private function createButtonsLevel(buttonLevelClass:Class):void 
 		{
 			_buttonsLevel = new <ButtonLevel>[];
 			
 			var buttonX:int = 0;
 			var buttonY:int = 0;
-			for (var i:int = 0; i < GameData.LEVELS_TOTAL; i++) {
-				var button:ButtonLevel = new bLevel();
+			for (var i:int = 0; i < Engine.getInstacne().data.levelsTotal; i++) {
+				var button:ButtonLevel = new buttonLevelClass();
 				
 				button.level = i + 1;
 				(button as MovieClip).tText.text = button.level;

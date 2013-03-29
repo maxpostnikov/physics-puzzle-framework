@@ -2,7 +2,6 @@ package ru.maxpostnikov.engine.ui
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
-	import ru.maxpostnikov.game.GameContent;
 	import ru.maxpostnikov.engine.ui.screens.Screen;
 	/**
 	 * ...
@@ -14,15 +13,13 @@ package ru.maxpostnikov.engine.ui
 		private var _screens:Dictionary;
 		private var _container:DisplayObjectContainer;
 		
-		public function Canvas(container:DisplayObjectContainer) 
+		public function Canvas(container:DisplayObjectContainer, screens:Vector.<Screen>) 
 		{
 			_container = container;
 			_screens = new Dictionary();
 			
-			for each (var screenClass:Class in GameContent.SCREENS) {
-				var screen:Screen = new screenClass();
+			for each (var screen:Screen in screens)
 				_screens[screen.getID()] = screen;
-			}
 		}
 		
 		public function showScreen(id:String, data:Object = null):void 

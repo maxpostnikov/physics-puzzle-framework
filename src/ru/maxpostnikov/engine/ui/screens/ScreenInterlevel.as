@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.ui.screens 
 {
+	import flash.display.MovieClip;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -9,11 +10,9 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		public static const ID:String = "Interlevel";
 		
-		public function ScreenInterlevel() 
+		public function ScreenInterlevel(visual:MovieClip) 
 		{
-			visual = new sInterlevel();
-			
-			super();
+			super(visual);
 		}
 		
 		override public function show(data:Object = null):void 

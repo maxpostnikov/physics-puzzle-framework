@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.ui.screens 
 {
+	import flash.display.MovieClip;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -9,11 +10,9 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		public static const ID:String = "Fail";
 		
-		public function ScreenFail() 
+		public function ScreenFail(visual:MovieClip) 
 		{
-			visual = new sFail();
-			
-			super();
+			super(visual);
 		}
 		
 		override public function getID():String { return ID; }

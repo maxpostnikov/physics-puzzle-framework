@@ -8,7 +8,7 @@ package ru.maxpostnikov.engine.entities
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov

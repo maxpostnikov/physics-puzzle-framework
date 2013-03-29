@@ -1,4 +1,4 @@
-package ru.maxpostnikov
+package ru.maxpostnikov.engine.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -12,8 +12,7 @@ package ru.maxpostnikov
 	import flash.ui.ContextMenuItem;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.Timer;
-	import ru.maxpostnikov.game.GameData;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	
 	/**
 	 * ...
@@ -30,8 +29,23 @@ package ru.maxpostnikov
 		private var _loadedBySize:Number;
 		private var _loadedByTime:Number;
 		
-		public function Preloader() 
+		private var _visualClass:Class;
+		private var _locked:Boolean;
+		private var _allowedURL:Array;
+		private var _urlSponsor:String;
+		private var _urlMoreGames:String;
+		private var _urlWalkthrough:String;
+		
+		public function Preloader(visualClass:Class, urlSponsor:String = "", urlMoreGames:String = "", urlWalkthrough:String = "", 
+								  locked:Boolean = false, allowedURL:Array = null) 
 		{
+			_visualClass = visualClass;
+			_urlSponsor = urlSponsor;
+			_urlMoreGames = urlMoreGames;
+			_urlWalkthrough = urlWalkthrough;
+			_locked = locked;
+			_allowedURL = allowedURL;
+			
 			if (stage) 
 				onAddedToStage();
 			else
@@ -45,13 +59,15 @@ package ru.maxpostnikov
 			initStage();
 			initContextMenu();
 			
-			_visual = new sPreloader();
+			_visual = new _visualClass();
 			_visual.mcProgress.mcBar.scaleX = 0;
 			_visual.buttonPlay.visible = false;
 			_visual.mcSponsor.buttonMode = true;
 			_visual.mcSponsor.mouseChildren = false;
 			_visual.buttonPlay.addEventListener(MouseEvent.CLICK, onClickPlay, false, 0, true);
 			_visual.mcSponsor.addEventListener(MouseEvent.CLICK, onClickSponsor, false, 0, true);
+			
+			_visualClass = null;
 			
 			_loadingTimer = new Timer(1000 * _LOADING_TIME_STEP, _LOADING_TIME_TOTAL / _LOADING_TIME_STEP);
 			_loadingTimer.addEventListener(TimerEvent.TIMER, loadByTime, false, 0, true);
@@ -141,7 +157,7 @@ package ru.maxpostnikov
 		
 		private function onClickPlay(e:MouseEvent):void 
 		{
-			if (GameData.LOCKED && !isDomainAllowed()) {
+			if (_locked && !isDomainAllowed()) {
 				_visual.gotoAndStop(2);
 				return;
 			}
@@ -165,7 +181,7 @@ package ru.maxpostnikov
 					domain = url[3];
 			}
 			
-			for each (var allowedURL:String in GameData.ALLOWED_URL) {
+			for each (var allowedURL:String in _allowedURL) {
 				if (domain && domain == allowedURL)
 					return true;
 			}
@@ -181,17 +197,17 @@ package ru.maxpostnikov
 		
 		private function onClickSponsor(e:MouseEvent):void 
 		{
-			Utils.openURL(GameData.URL_SPONSOR);
+			Utils.openURL(_urlSponsor);
 		}
 		
 		private function onContextMoreGames(e:ContextMenuEvent):void 
 		{
-			Utils.openURL(GameData.URL_MORE_GAMES);
+			Utils.openURL(_urlMoreGames);
 		}
 		
 		private function onContextWalkthrough(e:ContextMenuEvent):void 
 		{
-			Utils.openURL(GameData.URL_WALKTHROUGH);
+			Utils.openURL(_urlWalkthrough);
 		}
 		
 	}

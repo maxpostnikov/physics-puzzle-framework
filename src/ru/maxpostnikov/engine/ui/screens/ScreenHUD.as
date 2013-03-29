@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.ui.screens 
 {
+	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.effects.MCEffect;
 	/**
@@ -13,18 +14,16 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		private var _effect:MCEffect;
 		
-		public function ScreenHUD() 
+		public function ScreenHUD(visual:MovieClip, effectLevelChangeClass:Class) 
 		{
-			visual = new sHUD();
+			super(visual);
 			
-			_effect = new Effect_LevelChange();
+			_effect = new effectLevelChangeClass();
 			
 			this.mouseEnabled = false;
 			visual.mouseEnabled = false;
 			visual.mcLevelData.mouseEnabled = false;
 			visual.mcLevelData.mouseChildren = false;
-			
-			super();
 		}
 		
 		override public function show(data:Object = null):void 

@@ -5,7 +5,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Common.Math.b2Vec2;
 	import flash.geom.Rectangle;
 	import ru.maxpostnikov.engine.Engine;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov

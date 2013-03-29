@@ -5,7 +5,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.Joints.b2JointDef;
 	import Box2D.Dynamics.Joints.b2PrismaticJointDef;
 	import ru.maxpostnikov.engine.Engine;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov

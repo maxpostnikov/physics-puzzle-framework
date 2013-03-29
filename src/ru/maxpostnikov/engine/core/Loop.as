@@ -4,11 +4,12 @@ package ru.maxpostnikov.engine.core
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import ru.maxpostnikov.engine.Engine;
+	import ru.maxpostnikov.engine.EngineEvent;
 	import ru.maxpostnikov.engine.entities.components.Component;
 	import ru.maxpostnikov.engine.entities.components.ComponentJoint;
 	import ru.maxpostnikov.engine.entities.Entity;
 	import ru.maxpostnikov.engine.entities.IProcessable;
-	import ru.maxpostnikov.game.GameLogic;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -56,7 +57,7 @@ package ru.maxpostnikov.engine.core
 			
 			update();
 			
-			GameLogic.getInstacne().onLoopStep();
+			Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.LOOP_STEP));
 		}
 		
 		private function update():void 
@@ -75,11 +76,11 @@ package ru.maxpostnikov.engine.core
 					if (object.isRemoved) {
 						_entities.splice(_entities.indexOf(object as Entity), 1);
 						
-						GameLogic.getInstacne().onEntityRemoved(object as Entity);
+						Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.ENTITY_REMOVED, object));
 					} else {
 						_entities.push(object as Entity);
 						
-						GameLogic.getInstacne().onEntityAdded(object as Entity);
+						Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.ENTITY_ADDED, object));
 					}
 				} else if (object is Component) {
 					if (object is ComponentJoint) {

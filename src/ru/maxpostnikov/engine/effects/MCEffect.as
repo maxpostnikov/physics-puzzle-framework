@@ -4,7 +4,7 @@ package ru.maxpostnikov.engine.effects
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov

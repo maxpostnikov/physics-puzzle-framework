@@ -10,8 +10,10 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		protected var visual:MovieClip
 		
-		public function Screen()
+		public function Screen(visual:MovieClip)
 		{
+			this.visual = visual;
+			
 			addChild(visual);
 		}
 		

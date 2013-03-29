@@ -6,7 +6,6 @@ package ru.maxpostnikov.engine.ui
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import flash.utils.Dictionary;
-	import ru.maxpostnikov.game.GameContent;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -18,13 +17,25 @@ package ru.maxpostnikov.engine.ui
 		private var _cursor:Sprite;
 		private var _cursors:Dictionary;
 		
-		public function Cursors(stage:Stage) 
+		private static var _instance:Cursors;
+		
+		public function Cursors(singleton:PrivateClass) 
+		{
+			_instance = this;
+		}
+		
+		public static function getInstacne():Cursors 
+		{
+			return (_instance) ? _instance : new Cursors(new PrivateClass());
+		}
+		
+		public function init(stage:Stage, cursors:Vector.<Class>):void 
 		{
 			_stage = stage;
 			_cursors = new Dictionary();
 			
-			for (var i:String in GameContent.CURSORS) {
-				var cursorClass:Class = GameContent.CURSORS[i];
+			for (var i:String in cursors) {
+				var cursorClass:Class = cursors[i];
 				var cursor:Sprite = new cursorClass();
 				
 				cursor.mouseEnabled = false;
@@ -39,7 +50,8 @@ package ru.maxpostnikov.engine.ui
 		
 		public function showCursor(id:uint):void 
 		{
-			var cursor:Sprite = _cursors[id];
+			if (_cursors)
+				var cursor:Sprite = _cursors[id];
 			
 			if (cursor) {
 				var _isVisible:Boolean = true;
@@ -97,3 +109,5 @@ package ru.maxpostnikov.engine.ui
 	}
 
 }
+
+class PrivateClass {}

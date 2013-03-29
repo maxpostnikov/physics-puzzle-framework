@@ -1,6 +1,7 @@
 package ru.maxpostnikov.engine.ui.screens 
 {
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import ru.maxpostnikov.engine.ui.buttons.ButtonPlay;
 	import ru.maxpostnikov.engine.ui.buttons.ButtonResume;
 	/**
@@ -16,13 +17,11 @@ package ru.maxpostnikov.engine.ui.screens
 		private var _buttonPlay:ButtonPlay;
 		private var _buttonResume:ButtonResume;
 		
-		public function ScreenMainMenu() 
+		public function ScreenMainMenu(visual:MovieClip) 
 		{
-			visual = new sMainMenu();
+			super(visual);
 			
 			initButtonsPlayResume();
-			
-			super();
 		}
 		
 		override public function show(data:Object = null):void 
@@ -52,16 +51,9 @@ package ru.maxpostnikov.engine.ui.screens
 				
 				if (child is ButtonPlay) {
 					_buttonPlay = child as ButtonPlay;
-					_buttonResume = new bResume();
-					
-					_buttonResume.x = child.x;
-					_buttonResume.y = child.y;
-					_buttonResume.scaleX = child.scaleX;
-					_buttonResume.scaleY = child.scaleY;
+				} else if (child is ButtonResume) {
+					_buttonResume = child as ButtonResume;
 					_buttonResume.visible = false;
-					
-					visual.addChild(_buttonResume);
-					break;
 				}
 			}
 		}

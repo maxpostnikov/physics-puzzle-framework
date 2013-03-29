@@ -3,6 +3,7 @@ package ru.maxpostnikov.engine
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	import flash.media.Sound;
 	import ru.maxpostnikov.engine.core.KeyInput;
@@ -13,6 +14,7 @@ package ru.maxpostnikov.engine
 	import ru.maxpostnikov.engine.ui.Canvas;
 	import ru.maxpostnikov.engine.ui.Cursors;
 	import ru.maxpostnikov.engine.entities.IProcessable;
+	import ru.maxpostnikov.engine.ui.screens.Screen;
 	import ru.maxpostnikov.engine.ui.screens.ScreenBack;
 	import ru.maxpostnikov.engine.ui.screens.ScreenFail;
 	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
@@ -24,7 +26,7 @@ package ru.maxpostnikov.engine
 	 * ...
 	 * @author Max stagefear Postnikov
 	 */
-	public class Engine 
+	public class Engine extends EventDispatcher
 	{
 		
 		public static const RATIO:Number = 30;
@@ -40,6 +42,7 @@ package ru.maxpostnikov.engine
 		private var _cursors:Cursors;
 		private var _keyInput:KeyInput;
 		
+		private var _data:Object;
 		private var _width:Number;
 		private var _height:Number;
 		private var _isMuted:Boolean;
@@ -60,16 +63,34 @@ package ru.maxpostnikov.engine
 			return (_instance) ? _instance : new Engine(new PrivateClass());
 		}
 		
-		public function launch(container:DisplayObjectContainer, cookieName:String, debug:Boolean = false):void 
+		public function setData(levelsTotal:int, scoreTimer:Number = 100, scoreInitial:Number = 0, scoreOnTimer:Number = 1,
+								urlSponsor:String = "", urlMoreGames:String = "", urlWalkthrough:String = ""):void 
 		{
+			_data = { };
+			
+			_data.levelsTotal = levelsTotal;
+			
+			_data.scoreTimer = scoreTimer;
+			_data.scoreInitial = scoreInitial;
+			_data.scoreOnTimer = scoreOnTimer;
+			
+			_data.urlSponsor = urlSponsor;
+			_data.urlMoreGames = urlMoreGames;
+			_data.urlWalkthrough = urlWalkthrough;
+		}
+		
+		public function launch(container:DisplayObjectContainer, screens:Vector.<Screen>, cookieName:String, debug:Boolean = false):void 
+		{
+			if (!_data) throw Error("Error: No game data! Call setData() first.");
+			
 			addMask(container);
 			
 			_loop = new Loop(container, RATIO);
 			_sounds = new Sounds();
 			_cookie = new Cookie(cookieName);
 			_levels = new Levels(container);
-			_canvas = new Canvas(container);
-			_cursors = new Cursors(container.stage);
+			_canvas = new Canvas(container, screens);
+			_cursors = Cursors.getInstacne();
 			_keyInput = new KeyInput(container);
 			
 			load();
@@ -285,6 +306,8 @@ package ru.maxpostnikov.engine
 			container.addChild(mask);
 			container.mask = mask;
 		}
+		
+		public function get data():Object { return _data; }
 		
 		public function get width():Number { return _width; }
 		

@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.ui.screens 
 {
+	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import ru.maxpostnikov.engine.Engine;
 	/**
@@ -11,11 +12,9 @@ package ru.maxpostnikov.engine.ui.screens
 		
 		public static const ID:String = "Pause";
 		
-		public function ScreenPause() 
+		public function ScreenPause(visual:MovieClip) 
 		{
-			visual = new sPause();
-			
-			super();
+			super(visual);
 		}
 		
 		override public function show(data:Object = null):void 

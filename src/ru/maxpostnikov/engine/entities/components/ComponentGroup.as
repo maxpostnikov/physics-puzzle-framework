@@ -8,7 +8,7 @@ package ru.maxpostnikov.engine.entities.components
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
-	import ru.maxpostnikov.utilities.Utils;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
