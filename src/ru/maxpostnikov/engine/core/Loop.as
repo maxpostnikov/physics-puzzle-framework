@@ -51,9 +51,21 @@ package ru.maxpostnikov.engine.core
 			_debugSprite.visible = value;
 		}
 		
+		public function startDrag(object:IProcessable, force:Number):void 
+		{
+			if (object is Entity) object = (object as Entity).components[0];
+			
+			_physics.addMouseJoint(object as Component, force);
+		}
+		
+		public function stopDrag():void 
+		{
+			_physics.removeMouseJoint();
+		}
+		
 		private function step(e:Event):void 
 		{
-			_physics.step();
+			_physics.step(new Point(_container.mouseX / Engine.RATIO, _container.mouseY / Engine.RATIO));
 			
 			update();
 			

@@ -118,13 +118,13 @@ package ru.maxpostnikov.engine.core
 		
 		private function removeLevel():void 
 		{
-			_container.removeChild(_level);
-			
 			_level.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			_level.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			
 			for (var i:int = _level.numChildren - 1; i >= 0; i--)
 				(_level.getChildAt(i) as Entity).remove();
+			
+			_container.removeChild(_level);	
 			
 			_level = null;
 			

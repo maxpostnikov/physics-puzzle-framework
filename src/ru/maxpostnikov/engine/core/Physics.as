@@ -7,6 +7,8 @@ package ru.maxpostnikov.engine.core
 	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
+	import Box2D.Dynamics.Joints.b2MouseJoint;
+	import Box2D.Dynamics.Joints.b2MouseJointDef;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.entities.components.Component;
@@ -33,6 +35,7 @@ package ru.maxpostnikov.engine.core
 		public var isDebuged:Boolean;
 		
 		private var _world:b2World;
+		private var _jointMouse:b2MouseJoint;
 		private var _jointBodies:Vector.<b2Body>;
 		private var _jointComponent:ComponentJoint;
 		
@@ -44,10 +47,13 @@ package ru.maxpostnikov.engine.core
 			initDebugDraw(ratio, debugSprite);
 		}
 		
-		public function step():void 
+		public function step(mousePosition:Point):void 
 		{
 			_world.Step(_DT, _ITERATIONS_VELOCITY, _ITERATIONS_POSITION);
 			_world.ClearForces();
+			
+			if (_jointMouse) 
+				_jointMouse.SetTarget(new b2Vec2(mousePosition.x, mousePosition.y));
 			
 			if (isDebuged) _world.DrawDebugData();
 		}
@@ -70,6 +76,28 @@ package ru.maxpostnikov.engine.core
 			_world.DestroyBody(component.body);
 			
 			component.body = null;
+		}
+		
+		public function addMouseJoint(component:Component, force:Number):void 
+		{
+			if (_jointMouse) removeMouseJoint();
+			
+			var jointDef:b2MouseJointDef = new b2MouseJointDef();
+			jointDef.bodyA = _world.GetGroundBody();
+			jointDef.bodyB = component.body;
+			jointDef.target.Set(component.body.GetPosition().x, component.body.GetPosition().y);
+			jointDef.maxForce = force * component.body.GetMass();
+			jointDef.dampingRatio = 1;
+			
+			_jointMouse = _world.CreateJoint(jointDef) as b2MouseJoint;
+		}
+		
+		public function removeMouseJoint():void 
+		{
+			if (_jointMouse) {
+				_world.DestroyJoint(_jointMouse);
+				_jointMouse = null;
+			}
 		}
 		
 		public function addJoint(component:ComponentJoint):void 

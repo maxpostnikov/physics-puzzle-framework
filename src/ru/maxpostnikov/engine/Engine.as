@@ -279,6 +279,16 @@ package ru.maxpostnikov.engine
 			_sounds.mute(_isMuted);
 		}
 		
+		public function startDrag(object:IProcessable, force:Number):void 
+		{
+			_loop.startDrag(object, force);
+		}
+		
+		public function stopDrag():void 
+		{
+			_loop.stopDrag();
+		}
+		
 		private function load():void 
 		{
 			var data:Object = _cookie.load();
