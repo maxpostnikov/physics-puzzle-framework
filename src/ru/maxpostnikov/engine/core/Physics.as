@@ -114,6 +114,13 @@ package ru.maxpostnikov.engine.core
 			}
 		}
 		
+		public function removeJoint(component:ComponentJoint):void 
+		{
+			_world.DestroyJoint(component.joint);
+			
+			component.joint = null;
+		}
+		
 		private function queryPoints(points:Vector.<Point>, component:ComponentJoint = null):void 
 		{
 			_jointComponent = component;

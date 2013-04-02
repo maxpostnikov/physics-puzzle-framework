@@ -98,6 +98,8 @@ package ru.maxpostnikov.engine.core
 					if (object is ComponentJoint) {
 						if (!object.isRemoved)
 							_physics.addJoint(object as ComponentJoint);
+						else
+							_physics.removeJoint(object as ComponentJoint);
 					} else {
 						if (object.isRemoved)
 							_physics.removeBody(object as Component);

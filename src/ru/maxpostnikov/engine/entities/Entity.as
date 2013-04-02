@@ -92,7 +92,7 @@ package ru.maxpostnikov.engine.entities
 			//Override
 		}
 		
-		private function removeComponent(component:Component, isSelfRemoved:Boolean = false):void 
+		protected function removeComponent(component:Component, isSelfRemoved:Boolean = false):void 
 		{
 			_components.splice(_components.indexOf(component), 1);
 			

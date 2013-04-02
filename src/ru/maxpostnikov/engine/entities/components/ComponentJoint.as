@@ -76,7 +76,6 @@ package ru.maxpostnikov.engine.entities.components
 		{
 			super.remove();
 			
-			joint = null;
 			_anchorPoints = null;
 		}
 		
