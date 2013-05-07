@@ -43,6 +43,8 @@ package ru.maxpostnikov.engine.core
 		public function stop():void 
 		{
 			_container.removeEventListener(Event.ENTER_FRAME, step);
+			
+			Engine.getInstacne().dispatchEvent(new EngineEvent(EngineEvent.LOOP_STOP));
 		}
 		
 		public function debug(value:Boolean):void 

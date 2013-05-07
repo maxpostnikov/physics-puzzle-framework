@@ -14,6 +14,7 @@ package ru.maxpostnikov.engine
 		public static const LEVEL_MOUSE_OVER:String = "LevelMouseOver";
 		
 		public static const LOOP_STEP:String = "LoopStep";
+		public static const LOOP_STOP:String = "LoopStop";
 		
 		public static const ENTITY_ADDED:String = "EntityAdded";
 		public static const ENTITY_REMOVED:String = "EntityRemoved";

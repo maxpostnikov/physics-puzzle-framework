@@ -43,7 +43,6 @@ package ru.maxpostnikov.engine.ui.buttons
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver, false, 0, true);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp, false, 0, true);
 		}
 		
 		protected function onRemovedFromStage(e:Event):void 
@@ -68,11 +67,15 @@ package ru.maxpostnikov.engine.ui.buttons
 			click();
 			
 			tween(_scale + scaleIncrease, Linear.easeIn);
+			
+			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		private function onMouseDown(e:MouseEvent):void 
 		{
 			tween(_scale - scaleDecrease, Linear.easeOut);
+			
+			addEventListener(MouseEvent.MOUSE_UP, onMouseUp, false, 0, true);
 		}
 		
 		private function onRollOver(e:MouseEvent):void 
@@ -83,6 +86,9 @@ package ru.maxpostnikov.engine.ui.buttons
 		private function onRollOut(e:MouseEvent):void 
 		{
 			tween(_scale, Linear.easeOut);
+			
+			if (hasEventListener(MouseEvent.MOUSE_UP))
+				removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		private function tween(scale:Number, ease:Ease):void 
