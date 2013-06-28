@@ -22,9 +22,6 @@ package ru.maxpostnikov.engine.core
 	internal class Physics 
 	{
 		
-		private const _GRAVITY_X:Number = 0;
-		private const _GRAVITY_Y:Number = 10;
-		
 		private const _DT:Number = 1 / 30;
 		private const _ITERATIONS_VELOCITY:int = 12;
 		private const _ITERATIONS_POSITION:int = 15;
@@ -39,9 +36,9 @@ package ru.maxpostnikov.engine.core
 		private var _jointBodies:Vector.<b2Body>;
 		private var _jointComponent:ComponentJoint;
 		
-		public function Physics(ratio:Number, contactListener:b2ContactListener, debugSprite:Sprite = null) 
+		public function Physics(ratio:Number, contactListener:b2ContactListener, gravity:Point, debugSprite:Sprite = null) 
 		{
-			_world = new b2World(new b2Vec2(_GRAVITY_X, _GRAVITY_Y), true);
+			_world = new b2World(new b2Vec2(gravity.x, gravity.y), true);
 			_world.SetContactListener(contactListener);
 			
 			initDebugDraw(ratio, debugSprite);

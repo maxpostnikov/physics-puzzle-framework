@@ -24,10 +24,10 @@ package ru.maxpostnikov.engine.core
 		private var _container:DisplayObjectContainer;
 		private var _debugSprite:Sprite;
 		
-		public function Loop(container:DisplayObjectContainer, ratio:Number) 
+		public function Loop(container:DisplayObjectContainer, ratio:Number, gravity:Point) 
 		{
 			_container = container;
-			_physics = new Physics(ratio, new ContactListener(), createDebugSprite());
+			_physics = new Physics(ratio, new ContactListener(), gravity, createDebugSprite());
 			
 			queue = new <IProcessable>[];
 			_entities = new <Entity>[];

@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.entities.components 
 {
+	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
@@ -71,6 +72,14 @@ package ru.maxpostnikov.engine.entities.components
 			}
 			
 			return false;
+		}
+		
+		public function stopMoving():void 
+		{
+			if (!body) return;
+			
+			body.SetAngularVelocity(0);
+			body.SetLinearVelocity(new b2Vec2(0, 0));
 		}
 		
 		protected function hide():void 

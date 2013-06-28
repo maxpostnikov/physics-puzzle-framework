@@ -79,13 +79,13 @@ package ru.maxpostnikov.engine
 			_data.urlWalkthrough = urlWalkthrough;
 		}
 		
-		public function launch(container:DisplayObjectContainer, screens:Vector.<Screen>, cookieName:String, debug:Boolean = false):void 
+		public function launch(container:DisplayObjectContainer, screens:Vector.<Screen>, cookieName:String, debug:Boolean = false,  gravityX:Number = 0, gravityY:Number = 10):void 
 		{
 			if (!_data) throw Error("Error: No game data! Call setData() first.");
 			
 			addMask(container);
 			
-			_loop = new Loop(container, RATIO);
+			_loop = new Loop(container, RATIO, new Point(gravityX, gravityY));
 			_sounds = new Sounds();
 			_cookie = new Cookie(cookieName);
 			_levels = new Levels(container);

@@ -13,6 +13,8 @@ package ru.maxpostnikov.engine
 		public static const LEVEL_MOUSE_OUT:String = "LevelMouseOut";
 		public static const LEVEL_MOUSE_OVER:String = "LevelMouseOver";
 		
+		public static const HUD_MOUSE_OVER:String = "HUDMouseOver";
+		
 		public static const LOOP_STEP:String = "LoopStep";
 		public static const LOOP_STOP:String = "LoopStop";
 		

@@ -104,6 +104,12 @@ package ru.maxpostnikov.engine.entities
 			}
 		}
 		
+		protected function stopMoving():void 
+		{
+			for each (var component:Component in _components)
+				component.stopMoving();
+		}
+		
 		private function get isAllBodiesRemoved():Boolean 
 		{
 			for each (var component:Component in _components) {
