@@ -4,6 +4,7 @@ package ru.maxpostnikov.engine.entities
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import ru.maxpostnikov.engine.effects.MCEffect;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.entities.components.Component;
@@ -128,6 +129,21 @@ package ru.maxpostnikov.engine.entities
 			}
 			
 			return true;
+		}
+		
+		public function get position():Point
+		{
+			var coordinatesX:Array = [];
+			var coordinatesY:Array = [];
+			for each (var component:Component in _components) {
+				coordinatesX.push(component.x);
+				coordinatesY.push(component.y);
+			}
+			coordinatesX.sort(Array.NUMERIC);
+			coordinatesY.sort(Array.NUMERIC);
+			
+			return localToGlobal(new Point((coordinatesX[coordinatesX.length - 1] + coordinatesX[0]) / 2,
+										   (coordinatesY[coordinatesY.length - 1] + coordinatesY[0]) / 2));
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }
