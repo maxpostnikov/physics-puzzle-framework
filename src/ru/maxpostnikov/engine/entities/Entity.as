@@ -38,7 +38,7 @@ package ru.maxpostnikov.engine.entities
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
 		}
 		
-		private function onAddedToStage(e:Event):void 
+		protected function onAddedToStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
