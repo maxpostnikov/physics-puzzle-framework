@@ -1,10 +1,12 @@
 package ru.maxpostnikov.engine.core 
 {
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import ru.maxpostnikov.engine.effects.MCEffect;
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.EngineEvent;
 	import ru.maxpostnikov.engine.entities.Entity;
@@ -70,8 +72,15 @@ package ru.maxpostnikov.engine.core
 			}
 			
 			if (_level) {
-				for (var i:int = 0; i < _level.numChildren; i++)
-					(_level.getChildAt(i) as Entity).pause(flag);
+				for (var i:int = 0; i < _level.numChildren; i++) {
+					var child:DisplayObject = _level.getChildAt(i);
+					
+					if (child is Entity) {
+						(child as Entity).pause(flag);
+					} else if (child is MCEffect) {
+						(child as MCEffect).pause(flag);
+					}
+				}
 			}
 		}
 		
@@ -121,8 +130,11 @@ package ru.maxpostnikov.engine.core
 			_level.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			_level.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 			
-			for (var i:int = _level.numChildren - 1; i >= 0; i--)
-				(_level.getChildAt(i) as Entity).remove();
+			for (var i:int = _level.numChildren - 1; i >= 0; i--) {
+				if (_level.getChildAt(i) is Entity) {
+					(_level.getChildAt(i) as Entity).remove();
+				}
+			}
 			
 			_container.removeChild(_level);	
 			

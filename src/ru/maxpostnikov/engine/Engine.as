@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine 
 {
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -111,10 +112,10 @@ package ru.maxpostnikov.engine
 		{
 			var length:int = _levels.level.numChildren;
 			for (var i:int = 0; i < length; i++) {
-				var entity:IProcessable = _levels.level.getChildAt(i) as IProcessable;
+				var child:DisplayObject = _levels.level.getChildAt(i);
 				
-				if (entity is type) {
-					entity.remove();
+				if (child is IProcessable && child is type) {
+					(child as IProcessable).remove();
 					break;
 				}
 			}
