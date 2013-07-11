@@ -73,20 +73,27 @@ package ru.maxpostnikov.engine.entities.components
 		{
 			var staticBodies:int;
 			var dynamicBodies:int;
+			var kinematicBodies:int;
 			
 			for each (var component:Component in _group) {
 				if (component is ComponentPrimitive) {
 					if ((component as ComponentPrimitive).type == ComponentPrimitive.TYPE_STATIC)
 						staticBodies++;
-					else
+					else if ((component as ComponentPrimitive).type == ComponentPrimitive.TYPE_DINAMIC)
 						dynamicBodies++;
+					else
+						kinematicBodies++;
 				}
 			}
 			
-			if (staticBodies > dynamicBodies)
+			var maxBodies:int = Math.max(staticBodies, dynamicBodies, kinematicBodies);
+			
+			if (staticBodies == maxBodies)
 				return b2Body.b2_staticBody;
-			else
+			else if (dynamicBodies == maxBodies)
 				return b2Body.b2_dynamicBody;
+			else
+				return b2Body.b2_kinematicBody;
 		}
 		
 		private function createFixtureDefs():Vector.<b2FixtureDef> 

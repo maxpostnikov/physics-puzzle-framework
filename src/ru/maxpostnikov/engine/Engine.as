@@ -31,9 +31,8 @@ package ru.maxpostnikov.engine
 	{
 		
 		public static const RATIO:Number = 30;
-		
-		private const _BORDER_WIDTH:Number = 150;
-		private const _BORDER_HEIGHT:Number = 150;
+		public static const BORDER_WIDTH:Number = 150;
+		public static const BORDER_HEIGHT:Number = 150;
 		
 		private var _loop:Loop;
 		private var _sounds:Sounds;
@@ -97,8 +96,8 @@ package ru.maxpostnikov.engine
 			load();
 			
 			_isDebugAllowed = debug;
-			_width = container.stage.stageWidth + _BORDER_WIDTH;
-			_height = container.stage.stageHeight + _BORDER_HEIGHT;
+			_width = container.stage.stageWidth + BORDER_WIDTH;
+			_height = container.stage.stageHeight + BORDER_HEIGHT;
 			
 			container.addEventListener(Event.DEACTIVATE, onDeactivate);
 		}

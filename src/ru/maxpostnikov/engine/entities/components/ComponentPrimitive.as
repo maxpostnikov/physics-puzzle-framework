@@ -18,8 +18,9 @@ package ru.maxpostnikov.engine.entities.components
 		
 		public static const TYPE_STATIC:String = "Static";
 		public static const TYPE_DINAMIC:String = "Dinamic";
+		public static const TYPE_KINEMATIC:String = "Kinematic";
 		
-		[Inspectable(type="List", enumeration="Static, Dinamic", defaultValue="Static")]
+		[Inspectable(type="List", enumeration="Static, Dinamic, Kinematic", defaultValue="Static")]
 		public var type:String = "Static";
 		
 		[Inspectable(type="Number", defaultValue=1)]
@@ -66,8 +67,10 @@ package ru.maxpostnikov.engine.entities.components
 			
 			if (this.type == TYPE_STATIC)
 				bodyDef.type = b2Body.b2_staticBody;
-			else
+			else if (this.type == TYPE_DINAMIC)
 				bodyDef.type = b2Body.b2_dynamicBody;
+			else
+				bodyDef.type = b2Body.b2_kinematicBody;
 			
 			return bodyDef;	
 		}
