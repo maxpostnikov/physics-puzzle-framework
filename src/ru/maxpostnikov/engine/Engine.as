@@ -31,8 +31,6 @@ package ru.maxpostnikov.engine
 	{
 		
 		public static const RATIO:Number = 30;
-		public static const BORDER_WIDTH:Number = 150;
-		public static const BORDER_HEIGHT:Number = 150;
 		
 		private var _loop:Loop;
 		private var _sounds:Sounds;
@@ -43,8 +41,6 @@ package ru.maxpostnikov.engine
 		private var _keyInput:KeyInput;
 		
 		private var _data:Object;
-		private var _width:Number;
-		private var _height:Number;
 		private var _isMuted:Boolean;
 		private var _isPaused:Boolean;
 		private var _isPausedLoop:Boolean;
@@ -63,12 +59,20 @@ package ru.maxpostnikov.engine
 			return (_instance) ? _instance : new Engine(new PrivateClass());
 		}
 		
-		public function setData(levelsTotal:int, scoreTimer:Number = 100, scoreInitial:Number = 0, scoreOnTimer:Number = 1,
+		public function setData(levelsTotal:int, width:Number = 640, height:Number = 480, border:Number = 150, gravityX:Number = 0, gravityY:Number = 10, 
+								scoreTimer:Number = 100, scoreInitial:Number = 0, scoreOnTimer:Number = 1, 
 								urlSponsor:String = "", urlMoreGames:String = "", urlWalkthrough:String = ""):void 
 		{
 			_data = { };
 			
 			_data.levelsTotal = levelsTotal;
+			
+			_data.gravityX = gravityX;
+			_data.gravityY = gravityY;
+			
+			_data.width = width;
+			_data.height = height;
+			_data.border = border;
 			
 			_data.scoreTimer = scoreTimer;
 			_data.scoreInitial = scoreInitial;
@@ -79,13 +83,13 @@ package ru.maxpostnikov.engine
 			_data.urlWalkthrough = urlWalkthrough;
 		}
 		
-		public function launch(container:DisplayObjectContainer, screens:Vector.<Screen>, cookieName:String, debug:Boolean = false,  gravityX:Number = 0, gravityY:Number = 10):void 
+		public function launch(container:DisplayObjectContainer, screens:Vector.<Screen>, cookieName:String, debug:Boolean = false):void 
 		{
 			if (!_data) throw Error("Error: No game data! Call setData() first.");
 			
 			addMask(container);
 			
-			_loop = new Loop(container, RATIO, new Point(gravityX, gravityY));
+			_loop = new Loop(container, RATIO, new Point(_data.gravityX, _data.gravityY));
 			_sounds = new Sounds();
 			_cookie = new Cookie(cookieName);
 			_levels = new Levels(container);
@@ -96,8 +100,6 @@ package ru.maxpostnikov.engine
 			load();
 			
 			_isDebugAllowed = debug;
-			_width = container.stage.stageWidth + BORDER_WIDTH;
-			_height = container.stage.stageHeight + BORDER_HEIGHT;
 			
 			container.addEventListener(Event.DEACTIVATE, onDeactivate);
 		}
@@ -310,7 +312,7 @@ package ru.maxpostnikov.engine
 		{
 			var mask:Sprite = new Sprite();
 			mask.graphics.beginFill(0x000000, 0);
-			mask.graphics.drawRect(0, 0, container.stage.stageWidth, container.stage.stageHeight);
+			mask.graphics.drawRect(0, 0, _data.width, _data.height);
 			mask.graphics.endFill();
 			
 			container.addChild(mask);
@@ -318,10 +320,6 @@ package ru.maxpostnikov.engine
 		}
 		
 		public function get data():Object { return _data; }
-		
-		public function get width():Number { return _width; }
-		
-		public function get height():Number { return _height; }
 		
 		public function get isMuted():Boolean { return _isMuted; }
 		
