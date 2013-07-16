@@ -73,6 +73,10 @@ package ru.maxpostnikov.engine
 			_data.width = width;
 			_data.height = height;
 			_data.border = border;
+			_data.leftBorder = 0 - border;
+			_data.rightBorder = width + border;
+			_data.topBorder = 0 - border;
+			_data.bottomBorder = height + border;
 			
 			_data.scoreTimer = scoreTimer;
 			_data.scoreInitial = scoreInitial;

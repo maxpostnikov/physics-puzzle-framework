@@ -20,6 +20,7 @@ package ru.maxpostnikov.engine.entities
 		private var _isRemoved:Boolean;
 		private var _components:Vector.<Component>;
 		
+		protected var isInited:Boolean;
 		protected var initialRotation:Number;
 		
 		public function Entity()
@@ -65,6 +66,8 @@ package ru.maxpostnikov.engine.entities
 		
 		public function update():void 
 		{
+			if (!isInited) init();
+			
 			for each (var component:Component in _components) {
 				component.synchronize();
 				
@@ -91,6 +94,11 @@ package ru.maxpostnikov.engine.entities
 		protected function onSelfRemoved():void 
 		{
 			//Override
+		}
+		
+		protected function init():void 
+		{
+			isInited = true;
 		}
 		
 		protected function removeComponent(component:Component, isSelfRemoved:Boolean = false):void 
