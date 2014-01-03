@@ -140,7 +140,7 @@ package ru.maxpostnikov.engine.entities
 			return true;
 		}
 		
-		public function get position():Point
+		public function get positionGlobal():Point
 		{
 			var coordinatesX:Array = [];
 			var coordinatesY:Array = [];
@@ -153,6 +153,11 @@ package ru.maxpostnikov.engine.entities
 			
 			return localToGlobal(new Point((coordinatesX[coordinatesX.length - 1] + coordinatesX[0]) / 2,
 										   (coordinatesY[coordinatesY.length - 1] + coordinatesY[0]) / 2));
+		}
+		
+		public function get positionLocal():Point 
+		{
+			return this.parent.globalToLocal(positionGlobal);
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }
