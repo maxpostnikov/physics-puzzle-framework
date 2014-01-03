@@ -3,6 +3,7 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.Joints.b2DistanceJointDef;
 	import Box2D.Dynamics.Joints.b2JointDef;
+	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -13,6 +14,7 @@ package ru.maxpostnikov.engine.entities.components
 		override public function add():void 
 		{
 			anchors = 2;
+			Utils.rotateInsideOut(this);
 			
 			super.add();
 		}

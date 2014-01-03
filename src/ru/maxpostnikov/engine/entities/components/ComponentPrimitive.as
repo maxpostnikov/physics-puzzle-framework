@@ -59,10 +59,8 @@ package ru.maxpostnikov.engine.entities.components
 		
 		private function createBodyDef():b2BodyDef 
 		{
-			var position:Point = this.parent.localToGlobal(new Point(this.x, this.y));
-			
 			var bodyDef:b2BodyDef = new b2BodyDef();
-			bodyDef.position.Set(position.x / Engine.RATIO, position.y / Engine.RATIO);
+			bodyDef.position.Set(this.x / Engine.RATIO, this.y / Engine.RATIO);
 			bodyDef.bullet = this.isBullet;
 			
 			if (this.type == TYPE_STATIC)

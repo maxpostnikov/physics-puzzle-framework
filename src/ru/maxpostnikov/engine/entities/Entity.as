@@ -44,6 +44,7 @@ package ru.maxpostnikov.engine.entities
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			Utils.rotateInsideOut(this);
+			Utils.transmitPosition(this);
 			
 			for each (var component:Component in _components)
 				component.add();

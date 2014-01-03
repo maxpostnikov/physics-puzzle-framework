@@ -46,8 +46,7 @@ package ru.maxpostnikov.engine.entities.components
 		public function synchronize():void 
 		{
 			if (body && body.GetType() != b2Body.b2_staticBody) {
-				var position:Point = this.parent.globalToLocal(new Point(body.GetPosition().x * Engine.RATIO, 
-																		 body.GetPosition().y * Engine.RATIO));
+				var position:Point = new Point(body.GetPosition().x * Engine.RATIO, body.GetPosition().y * Engine.RATIO);
 				var rotation:Number = Utils.angleInDegrees(body.GetAngle());
 				if (Math.abs(rotation) > 360) rotation %= 360;
 				

@@ -5,7 +5,6 @@ package ru.maxpostnikov.engine.entities.components
 	import Box2D.Dynamics.Joints.b2JointDef;
 	import flash.geom.Point;
 	import ru.maxpostnikov.engine.Engine;
-	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
 	 * ...
 	 * @author Max stagefear Postnikov
@@ -58,8 +57,6 @@ package ru.maxpostnikov.engine.entities.components
 		
 		override public function add():void 
 		{
-			Utils.rotateInsideOut(this);
-			
 			for (var i:int = 1; i <= anchors; i++) {
 				var point:Point = new Point(this.x + this['point_' + i].x, this.y + this['point_' + i].y);
 				point = this.parent.localToGlobal(point);

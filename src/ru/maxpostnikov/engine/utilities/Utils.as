@@ -56,6 +56,18 @@ package ru.maxpostnikov.engine.utilities
 			container.rotation = 0;
 		}
 		
+		public static function transmitPosition(container:DisplayObjectContainer):void 
+		{
+			for (var i:int = 0; i < container.numChildren; i++) {
+				var child:DisplayObject = container.getChildAt(i);
+				
+				child.x += container.x;
+				child.y += container.y;
+			}
+			
+			container.x = container.y = 0;
+		}
+		
 		public static function realSize(mc:MovieClip):Rectangle 
 		{
 			var rotation:Number = mc.rotation;
