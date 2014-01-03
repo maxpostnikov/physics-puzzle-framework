@@ -14,7 +14,7 @@ package ru.maxpostnikov.engine.entities.components
 		override public function add():void 
 		{
 			anchors = 2;
-			Utils.rotateInsideOut(this);
+			Utils.transmitRotation(this);
 			
 			super.add();
 		}

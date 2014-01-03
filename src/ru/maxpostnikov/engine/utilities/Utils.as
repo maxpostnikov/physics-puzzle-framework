@@ -38,7 +38,7 @@ package ru.maxpostnikov.engine.utilities
 			return angle * Math.PI / 180;
 		}
 		
-		public static function rotateInsideOut(container:DisplayObjectContainer):void 
+		public static function transmitRotation(container:DisplayObjectContainer):void 
 		{
 			var rotation:Number = container.rotation;
 			var angle:Number = angleInRadians(rotation);

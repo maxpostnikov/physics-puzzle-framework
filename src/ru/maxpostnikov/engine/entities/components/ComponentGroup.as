@@ -32,7 +32,7 @@ package ru.maxpostnikov.engine.entities.components
 		
 		override public function add():void 
 		{
-			Utils.rotateInsideOut(this);
+			Utils.transmitRotation(this);
 			
 			bodyDef = createBodyDef();
 			fixtureDefs = createFixtureDefs();
