@@ -129,6 +129,8 @@ package ru.maxpostnikov.engine.core
 			return _debugSprite;
 		}
 		
+		public function get debugSprite():Sprite { return _debugSprite; }
+		
 	}
 
 }

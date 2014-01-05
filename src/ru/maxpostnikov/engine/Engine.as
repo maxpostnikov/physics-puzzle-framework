@@ -7,6 +7,7 @@ package ru.maxpostnikov.engine
 	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	import flash.media.Sound;
+	import ru.maxpostnikov.engine.core.GameCamera;
 	import ru.maxpostnikov.engine.core.KeyInput;
 	import ru.maxpostnikov.engine.core.Loop;
 	import ru.maxpostnikov.engine.core.Cookie;
@@ -39,6 +40,7 @@ package ru.maxpostnikov.engine
 		private var _canvas:Canvas;
 		private var _cursors:Cursors;
 		private var _keyInput:KeyInput;
+		private var _camera:GameCamera;
 		
 		private var _data:Object;
 		private var _isMuted:Boolean;
@@ -100,6 +102,7 @@ package ru.maxpostnikov.engine
 			_canvas = new Canvas(container, screens);
 			_cursors = Cursors.getInstacne();
 			_keyInput = new KeyInput(container);
+			_camera = new GameCamera(_loop.debugSprite);
 			
 			load();
 			
@@ -332,6 +335,8 @@ package ru.maxpostnikov.engine
 		public function get isPausedLoop():Boolean { return _isPausedLoop; }
 		
 		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
+		
+		public function get camera():GameCamera { return _camera; }
 		
 	}
 

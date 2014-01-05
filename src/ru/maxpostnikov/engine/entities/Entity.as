@@ -1,5 +1,6 @@
 package ru.maxpostnikov.engine.entities 
 {
+	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Fixture;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -158,6 +159,26 @@ package ru.maxpostnikov.engine.entities
 		public function get positionLocal():Point 
 		{
 			return this.parent.globalToLocal(positionGlobal);
+		}
+		
+		public function get positionPhysics():Point 
+		{
+			var position:b2Vec2;
+			var coordinatesX:Array = [];
+			var coordinatesY:Array = [];
+			for each (var component:Component in _components) {
+				if (component.body) {
+					position = component.body.GetPosition();
+					
+					coordinatesX.push(position.x * Engine.RATIO);
+					coordinatesY.push(position.y * Engine.RATIO);
+				}
+			}
+			coordinatesX.sort(Array.NUMERIC);
+			coordinatesY.sort(Array.NUMERIC);
+			
+			return new Point((coordinatesX[coordinatesX.length - 1] + coordinatesX[0]) / 2,
+							 (coordinatesY[coordinatesY.length - 1] + coordinatesY[0]) / 2)
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }

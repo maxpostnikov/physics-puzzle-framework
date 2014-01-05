@@ -107,6 +107,7 @@ package ru.maxpostnikov.engine.core
 			_level.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut, false, 0, true);
 			_level.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver, false, 0, true);
 			
+			Engine.getInstacne().camera.trackLevel(_level);
 			Engine.getInstacne().showScreen(ScreenHUD.ID, { level:number, score:_data[_currentLevel - 1].score } );
 		}
 		
