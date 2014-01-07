@@ -33,8 +33,8 @@ package ru.maxpostnikov.engine.core
 			var offset:Point = new Point(Engine.getInstacne().data.cameraWidth / 2 - position.x, 
 										 Engine.getInstacne().data.cameraHeight / 2 - position.y);
 			
-			if (Math.abs(offset.x) > margin.x) {
-				_level.x = _debugSprite.x = offset.x + margin.x;
+			if (Math.abs(_level.x - offset.x) > margin.x) {
+				_level.x = _debugSprite.x = _level.x - offset.x > 0 ? offset.x + margin.x : offset.x - margin.x;
 				
 				if (_level.x > 0) 
 					_level.x = _debugSprite.x = 0;
@@ -42,8 +42,8 @@ package ru.maxpostnikov.engine.core
 					_level.x = _debugSprite.x = Engine.getInstacne().data.cameraWidth - Engine.getInstacne().levelWidth;
 			}
 			
-			if (Math.abs(offset.y) > margin.y) {
-				_level.y = _debugSprite.y = offset.y + margin.y;
+			if (Math.abs(_level.y - offset.y) > margin.y) {
+				_level.y = _debugSprite.y = _level.y - offset.y > 0 ? offset.y + margin.y : offset.y - margin.y;
 				
 				if (_level.y > 0) 
 					_level.y = _debugSprite.y = 0;
