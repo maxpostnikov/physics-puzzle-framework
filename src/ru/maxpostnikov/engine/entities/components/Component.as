@@ -62,9 +62,9 @@ package ru.maxpostnikov.engine.entities.components
 				var position:Point = new Point(body.GetPosition().x * Engine.RATIO, 
 											   body.GetPosition().y * Engine.RATIO);
 				
-				if (position.y - (this.height / 2) > (Engine.getInstacne().data.height + Engine.getInstacne().data.border) ||
+				if (position.y - (this.height / 2) > (Engine.getInstacne().levelHeight + Engine.getInstacne().data.border) ||
 					position.y + (this.height / 2) < (0 - Engine.getInstacne().data.border) || 
-					position.x - (this.width / 2) > (Engine.getInstacne().data.width + Engine.getInstacne().data.border) || 
+					position.x - (this.width / 2) > (Engine.getInstacne().levelWidth + Engine.getInstacne().data.border) || 
 					position.x + (this.width / 2) < (0 - Engine.getInstacne().data.border)) {
 					return true;
 				}

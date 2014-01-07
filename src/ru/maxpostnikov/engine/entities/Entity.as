@@ -177,8 +177,10 @@ package ru.maxpostnikov.engine.entities
 			coordinatesX.sort(Array.NUMERIC);
 			coordinatesY.sort(Array.NUMERIC);
 			
-			return new Point((coordinatesX[coordinatesX.length - 1] + coordinatesX[0]) / 2,
-							 (coordinatesY[coordinatesY.length - 1] + coordinatesY[0]) / 2)
+			if (coordinatesX.length > 0 && coordinatesY.length > 0)
+				return new Point((coordinatesX[coordinatesX.length - 1] + coordinatesX[0]) / 2, (coordinatesY[coordinatesY.length - 1] + coordinatesY[0]) / 2)
+			else
+				return new Point(0, 0);
 		}
 		
 		public function get isRemoved():Boolean { return _isRemoved; }

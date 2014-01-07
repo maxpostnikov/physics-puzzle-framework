@@ -10,6 +10,7 @@ package ru.maxpostnikov.engine.core
 	import ru.maxpostnikov.engine.Engine;
 	import ru.maxpostnikov.engine.EngineEvent;
 	import ru.maxpostnikov.engine.entities.Entity;
+	import ru.maxpostnikov.engine.entities.EntityBackground;
 	import ru.maxpostnikov.engine.ui.screens.ScreenHUD;
 	import ru.maxpostnikov.engine.utilities.Utils;
 	/**
@@ -193,6 +194,26 @@ package ru.maxpostnikov.engine.core
 			}
 			
 			return true;
+		}
+		
+		public function get levelWidth():Number 
+		{
+			if (!_level || _level.numChildren == 0) return 0;
+			
+			if (_level.getChildAt(0) is EntityBackground)
+				return (_level.getChildAt(0) as EntityBackground).levelWidth;
+			else
+				return _level.getChildAt(0).width;
+		}
+		
+		public function get levelHeight():Number 
+		{
+			if (!_level || _level.numChildren == 0) return 0;
+			
+			if (_level.getChildAt(0) is EntityBackground)
+				return (_level.getChildAt(0) as EntityBackground).levelHeight;
+			else
+				return _level.getChildAt(0).height;
 		}
 		
 		public function get level():MovieClip { return _level; }

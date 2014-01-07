@@ -61,7 +61,7 @@ package ru.maxpostnikov.engine
 			return (_instance) ? _instance : new Engine(new PrivateClass());
 		}
 		
-		public function setData(levelsTotal:int, width:Number = 640, height:Number = 480, border:Number = 150, gravityX:Number = 0, gravityY:Number = 10, 
+		public function setData(levelsTotal:int, cameraWidth:Number = 640, cameraHeight:Number = 480, border:Number = 150, gravityX:Number = 0, gravityY:Number = 10, 
 								scoreTimer:Number = 100, scoreInitial:Number = 0, scoreOnTimer:Number = 1, 
 								urlSponsor:String = "", urlMoreGames:String = "", urlWalkthrough:String = ""):void 
 		{
@@ -72,13 +72,9 @@ package ru.maxpostnikov.engine
 			_data.gravityX = gravityX;
 			_data.gravityY = gravityY;
 			
-			_data.width = width;
-			_data.height = height;
+			_data.cameraWidth = cameraWidth;
+			_data.cameraHeight = cameraHeight;
 			_data.border = border;
-			_data.leftBorder = 0 - border;
-			_data.rightBorder = width + border;
-			_data.topBorder = 0 - border;
-			_data.bottomBorder = height + border;
 			
 			_data.scoreTimer = scoreTimer;
 			_data.scoreInitial = scoreInitial;
@@ -319,7 +315,7 @@ package ru.maxpostnikov.engine
 		{
 			var mask:Sprite = new Sprite();
 			mask.graphics.beginFill(0x000000, 0);
-			mask.graphics.drawRect(0, 0, _data.width, _data.height);
+			mask.graphics.drawRect(0, 0, _data.cameraWidth, _data.cameraHeight);
 			mask.graphics.endFill();
 			
 			container.addChild(mask);
@@ -337,6 +333,10 @@ package ru.maxpostnikov.engine
 		public function get isDebugAllowed():Boolean { return _isDebugAllowed; }
 		
 		public function get camera():GameCamera { return _camera; }
+		
+		public function get levelWidth():Number { return _levels.levelWidth; }
+		
+		public function get levelHeight():Number { return _levels.levelHeight; }
 		
 	}
 
