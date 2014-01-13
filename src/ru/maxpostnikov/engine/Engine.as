@@ -125,6 +125,16 @@ package ru.maxpostnikov.engine
 			}
 		}
 		
+		public function forEachEntity(execute:Function):void 
+		{
+			var length:int = _levels.level.numChildren;
+			for (var i:int = 0; i < length; i++) {
+				var child:DisplayObject = _levels.level.getChildAt(i);
+				
+				if (child is IProcessable) execute(child as IProcessable);
+			}
+		}
+		
 		public function playSound(sound:Sound, loops:int = int.MAX_VALUE):void 
 		{
 			_sounds.play(sound, loops);
