@@ -88,7 +88,7 @@ package ru.maxpostnikov.engine.entities
 			}
 		}
 		
-		public function contact(type:String, fixture:b2Fixture, entity:Entity, impulse:Number):void 
+		public function contact(type:String, fixture:b2Fixture, entity:Entity, entityFixture:b2Fixture, impulse:Number):void 
 		{
 			//Override
 		}

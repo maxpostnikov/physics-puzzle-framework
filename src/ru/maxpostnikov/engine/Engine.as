@@ -125,13 +125,13 @@ package ru.maxpostnikov.engine
 			}
 		}
 		
-		public function forEachEntity(execute:Function):void 
+		public function forEachEntity(execute:Function, ... args):void 
 		{
 			var length:int = _levels.level.numChildren;
 			for (var i:int = 0; i < length; i++) {
 				var child:DisplayObject = _levels.level.getChildAt(i);
 				
-				if (child is IProcessable) execute(child as IProcessable);
+				if (child is IProcessable) execute(child as IProcessable, args);
 			}
 		}
 		

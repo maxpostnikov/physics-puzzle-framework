@@ -123,6 +123,7 @@ package ru.maxpostnikov.engine.core
 		{
 			_debugSprite = new Sprite();
 			_debugSprite.visible = false;
+			_debugSprite.mouseEnabled = false;
 			
 			_container.addChild(_debugSprite);
 			

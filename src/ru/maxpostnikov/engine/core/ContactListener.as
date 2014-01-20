@@ -47,8 +47,8 @@ package ru.maxpostnikov.engine.core
 				var entityA:Entity = componentA.parent as Entity;
 				var entityB:Entity = componentB.parent as Entity;
 				
-				entityA.contact(type, contact.GetFixtureA(), entityB, impulse);
-				entityB.contact(type, contact.GetFixtureB(), entityA, impulse);
+				entityA.contact(type, contact.GetFixtureA(), entityB, contact.GetFixtureB(), impulse);
+				entityB.contact(type, contact.GetFixtureB(), entityA, contact.GetFixtureA(), impulse);
 			}
 		}
 		
