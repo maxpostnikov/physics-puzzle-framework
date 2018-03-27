@@ -1,6 +1,6 @@
-A small framework, created to accelerate development of physics puzzle games.  
+A small framework, aimed to accelerate development of physics puzzle games.  
 
-Main feature is simplified levels creation with use of [**Adobe Animate CC**](https://www.adobe.com/products/animate.html) (previously known as Flash IDE) and a set of adjustable components - physical primitives and joints. Those components, along with graphics, can be easily combined into complex game objects.
+Main feature is simplified level editing with use of [**Adobe Animate CC**](https://www.adobe.com/products/animate.html) (previously known as Flash IDE) and a set of adjustable components - physics primitives and joints. Those components, along with graphics, can be easily combined into complex game objects.
 
 For usage example see the [**demo repo**](https://github.com/maxpostnikov/physics-puzzle-framework-demo).
 
